@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>JD Resume Changer</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <h1>JD Resume Changer</h1>
+    <span id="status">Ready</span>
+  </header>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="paste">Paste JD</button>
+    <button class="tab-btn" data-tab="upload">Upload File</button>
+  </div>
+
+  <div id="paste-tab" class="tab-content active">
+    <label>Target role (optional)</label>
+    <input id="role" placeholder="Software Engineer / ML Engineer / Data Scientist">
+
+    <label>Job description</label>
+    <textarea id="jd" placeholder="Paste the complete JD here..."></textarea>
+
+    <button id="generate">Tailor + Compile Resume</button>
+  </div>
+
+  <div id="upload-tab" class="tab-content">
+    <label>Upload JD file (PDF, DOC, or TXT)</label>
+    <input type="file" id="jdFile" accept=".pdf,.doc,.docx,.txt">
+    
+    <label>Target role (optional)</label>
+    <input id="roleFile" placeholder="Software Engineer / ML Engineer / Data Scientist">
+
+    <button id="generateFile" disabled>Upload & Process</button>
+  </div>
+
+  <section id="progress" hidden>
+    <h3>Processing Steps</h3>
+    <div class="steps">
+      <div class="step" id="step-1">
+        <span class="step-label">Extract JD Keywords</span>
+        <span class="step-status">pending</span>
+      </div>
+      <div class="step" id="step-2">
+        <span class="step-label">Load Master Resume</span>
+        <span class="step-status">pending</span>
+      </div>
+      <div class="step" id="step-3">
+        <span class="step-label">Match Keywords</span>
+        <span class="step-status">pending</span>
+      </div>
+      <div class="step" id="step-4">
+        <span class="step-label">Generate Tailored LaTeX</span>
+        <span class="step-status">pending</span>
+      </div>
+      <div class="step" id="step-5">
+        <span class="step-label">Compile to PDF</span>
+        <span class="step-status">pending</span>
+      </div>
+      <div class="step" id="step-6">
+        <span class="step-label">Validation Complete</span>
+        <span class="step-status">pending</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="result" hidden>
+    <div class="stats">
+      <div><b id="pages">-</b><small>Pages</small></div>
+      <div><b id="matched">-</b><small>Keywords matched</small></div>
+      <div><b id="missing">-</b><small>Potential gaps</small></div>
+      <div><b id="atsScore">-</b><small>ATS Score</small></div>
+    </div>
+
+    <h3>Changes</h3>
+    <ul id="changes"></ul>
+
+    <h3>ATS notes</h3>
+    <ul id="notes"></ul>
+
+    <button id="downloadPdf">Download PDF</button>
+    <button id="downloadTex" class="secondary">Download .tex</button>
+  </section>
+
+  <footer>
+    <a href="options.html" target="_blank">Settings / Master Resume</a>
+  </footer>
+
+  <script src="jszip.min.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

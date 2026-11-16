@@ -1,0 +1,111 @@
+{
+  "overall_match": 85,
+  "matched_skills": [
+    {
+      "jd_requirement": "Java",
+      "resume_evidence": "Java (languages)",
+      "match_type": "direct"
+    },
+    {
+      "jd_requirement": "Spring Boot",
+      "resume_evidence": "Spring Boot (frameworks)",
+      "match_type": "direct"
+    },
+    {
+      "jd_requirement": "REST APIs",
+      "resume_evidence": "REST APIs (technical_skills)",
+      "match_type": "direct"
+    },
+    {
+      "jd_requirement": "SQL",
+      "resume_evidence": "SQL (languages)",
+      "match_type": "direct"
+    },
+    {
+      "jd_requirement": "Git",
+      "resume_evidence": "Git (tools)",
+      "match_type": "direct"
+    },
+    {
+      "jd_requirement": "React",
+      "resume_evidence": "React.js (frameworks)",
+      "match_type": "direct"
+    }
+  ],
+  "missing_skills": [
+    "Docker",
+    "AWS",
+    "Microservices"
+  ],
+  "related_skills": [
+    {
+      "jd_requirement": "AWS",
+      "resume_evidence": "Google Cloud Digital Leader Certification, Microsoft Certified: Azure AI Fundamentals",
+      "reason": "Candidate has certifications in other major cloud platforms (Google Cloud, Azure), demonstrating foundational knowledge in cloud computing concepts which are transferable to AWS."
+    }
+  ],
+  "relevant_experience": [
+    {
+      "company": "TCS",
+      "evidence": "Working as an Assistant System Engineer at Tata Consultancy Services (TCS), contributing to enterprise banking applications across frontend and backend modules. Contributing to BaNCS development for CTBC Bank, working across frontend and backend application modules and supporting end-to-end application development.",
+      "relevance": "This experience directly aligns with the Software Engineer role, involving contributions to enterprise banking applications, specifically across backend modules and supporting end-to-end application development, which is highly relevant to developing backend applications."
+    }
+  ],
+  "relevant_projects": [
+    {
+      "project": "Medi Bot -- AI-Powered Medical Receptionist",
+      "evidence": "Developed an intelligent medical receptionist chatbot for appointment scheduling, emergency requests, and FAQs using Dialogflow for NLU and Flask for webhook responses and business logic. Built the UI with Streamlit, validated APIs using Postman, and implemented MongoDB to store patient chat history, appointments, and emergency logs.",
+      "relevance": "Demonstrates experience in developing backend logic (Flask), validating APIs (Postman), and implementing database solutions (MongoDB), which are directly applicable to building and maintaining REST APIs and working with databases."
+    },
+    {
+      "project": "SEM Planning Tool -- FastAPI & GenAI Application",
+      "evidence": "Built a FastAPI-based SEM campaign planning application integrating the Google Ads API for keyword extraction and Gemini LLM for theme clustering, keyword grouping, CPC analysis, and budget allocation.",
+      "relevance": "Showcases experience in building backend applications (FastAPI) and integrating with external APIs (Google Ads API), which is highly relevant to developing backend applications and building/maintaining REST APIs."
+    }
+  ],
+  "keywords_to_emphasize": [
+    "Software Engineer",
+    "Java",
+    "Spring Boot",
+    "REST APIs",
+    "SQL",
+    "Git",
+    "React.js",
+    "backend applications",
+    "relational databases",
+    "frontend developers"
+  ],
+  "matched_responsibilities": [
+    {
+      "jd_responsibility": "Develop backend applications using Java and Spring Boot",
+      "resume_evidence": "Working as an Assistant System Engineer at Tata Consultancy Services (TCS), contributing to enterprise banking applications across frontend and backend modules. (TCS experience) | Java (languages), Spring Boot (frameworks)",
+      "match_type": "direct"
+    },
+    {
+      "jd_responsibility": "Build and maintain REST APIs",
+      "resume_evidence": "REST APIs (technical_skills) | validated APIs using Postman (Medi Bot project) | integrating the Google Ads API (SEM Planning Tool project)",
+      "match_type": "direct"
+    },
+    {
+      "jd_responsibility": "Work with relational databases",
+      "resume_evidence": "MySQL, Oracle, Derby (databases) | Database Management Systems (technical_skills)",
+      "match_type": "direct"
+    },
+    {
+      "jd_responsibility": "Write clean and maintainable code",
+      "resume_evidence": "Contributing to enterprise banking applications across frontend and backend modules. (TCS experience) | end-to-end application development (TCS experience)",
+      "match_type": "related"
+    },
+    {
+      "jd_responsibility": "Collaborate with frontend developers",
+      "resume_evidence": "contributing to enterprise banking applications across frontend and backend modules. (TCS experience)",
+      "match_type": "direct"
+    }
+  ],
+  "keywords_not_supported": [
+    "Docker",
+    "AWS",
+    "Microservices",
+    "clean code"
+  ]
+}

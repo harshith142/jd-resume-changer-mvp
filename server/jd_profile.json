@@ -1,0 +1,40 @@
+{
+  "job_title": "Software Engineer",
+  "experience_level": "1-3 years of experience",
+  "must_have_skills": [
+    "Java",
+    "Spring Boot",
+    "REST APIs",
+    "SQL",
+    "Git"
+  ],
+  "nice_to_have_skills": [
+    "React",
+    "Docker",
+    "AWS",
+    "Microservices"
+  ],
+  "responsibilities": [
+    "Develop backend applications using Java and Spring Boot",
+    "Build and maintain REST APIs",
+    "Work with relational databases",
+    "Write clean and maintainable code",
+    "Collaborate with frontend developers"
+  ],
+  "keywords": [
+    "Software Engineer",
+    "Java",
+    "Spring Boot",
+    "REST APIs",
+    "SQL",
+    "Git",
+    "React",
+    "Docker",
+    "AWS",
+    "Microservices",
+    "backend applications",
+    "relational databases",
+    "clean code",
+    "frontend developers"
+  ]
+}

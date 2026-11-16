@@ -1,0 +1,508 @@
+\documentclass[10pt,a4paper]{article}
+
+% =========================================================
+% MASTER RESUME — FULL PROJECT CATALOG
+% This is a 2-page source document containing ALL 9 projects.
+% The AI tailoring system will SELECT the top 3-4 projects
+% based on the job description and produce a 1-page output.
+% DO NOT compile this directly for submission.
+% =========================================================
+
+% =========================================================
+% PACKAGES
+% =========================================================
+\usepackage[
+    a4paper,
+    top=0.25in,
+    bottom=0.25in,
+    left=0.38in,
+    right=0.38in
+]{geometry}
+
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\usepackage{lmodern}
+
+% =========================================================
+% PAGE SETTINGS
+% =========================================================
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+
+% =========================================================
+% COLORS
+% =========================================================
+
+\definecolor{sectionblack}{RGB}{0,0,0}
+\definecolor{linkblue}{RGB}{0,0,180}
+
+% =========================================================
+% SECTION HEADING
+% =========================================================
+
+\newcommand{\resumesection}[1]{%
+    \vspace{2pt}
+    \noindent
+    \colorbox{sectionblack}{%
+        \parbox{\dimexpr\linewidth-2\fboxsep\relax}{%
+            \centering
+            \textcolor{white}{\textbf{\normalsize #1}}
+        }%
+    }%
+    \vspace{1pt}
+}
+
+% =========================================================
+% ENTRY HEADING
+% =========================================================
+
+\newcommand{\entry}[2]{%
+    \noindent
+    \begin{tabularx}{\linewidth}{@{}X r@{}}
+        \textbf{#1} & \textbf{#2}
+    \end{tabularx}
+    \vspace{-2pt}
+}
+
+% =========================================================
+% BULLET SETTINGS
+% =========================================================
+
+\setlist[itemize]{
+    leftmargin=14pt,
+    labelsep=4pt,
+    itemsep=0pt,
+    topsep=0pt,
+    parsep=0pt,
+    partopsep=0pt
+}
+
+% =========================================================
+% DOCUMENT
+% =========================================================
+
+\begin{document}
+
+% =========================================================
+% HEADER
+% =========================================================
+
+\begin{center}
+
+{\fontsize{19}{21}\selectfont\textbf{HARSHITH MARIDE}}
+
+\vspace{1pt}
+
+{\small
+9398892826
+\quad | \quad
+\href{mailto:marideharshith21@gmail.com}
+{\textcolor{linkblue}{marideharshith21@gmail.com}}
+\quad | \quad
+\href{https://www.linkedin.com/in/maride-harshith-1569931a7/}
+{\textcolor{linkblue}{LinkedIn}}
+}
+
+\end{center}
+
+\vspace{-5pt}
+
+% =========================================================
+% EDUCATION
+% =========================================================
+
+\resumesection{EDUCATION}
+
+\renewcommand{\arraystretch}{0.85}
+
+\begin{tabularx}{\linewidth}{
+    @{}
+    >{\raggedright\arraybackslash}X
+    >{\raggedright\arraybackslash}X
+    >{\centering\arraybackslash}p{1.25cm}
+    >{\centering\arraybackslash}p{1.0cm}
+    @{}
+}
+
+\textbf{Program}
+&
+\textbf{Institute}
+&
+\textbf{CGPA}
+&
+\textbf{Year}
+\\[-1pt]
+
+\hline
+
+B.Tech CSE -- AI \& Robotics
+&
+Vellore Institute of Technology, Chennai
+&
+8.92
+&
+2025
+\\
+
+XII
+&
+Narayana Junior College, Hyderabad
+&
+93.1
+&
+2020
+\\
+
+X
+&
+Narayana School, Tirupati
+&
+10
+&
+2018
+
+\end{tabularx}
+
+% =========================================================
+% EXPERIENCE
+% =========================================================
+
+\resumesection{EXPERIENCE}
+
+\entry
+{Assistant System Engineer (ASE) -- TCS}
+{Nov 2025 -- Present}
+
+\begin{itemize}
+
+\item Working as an \textbf{Assistant System Engineer at Tata Consultancy Services (TCS)}, developing enterprise banking microservices and portal modules using \textbf{Java}, \textbf{Spring Boot}, and \textbf{Angular} for the \textbf{TCS BaNCS} suite (CTBC Bank).
+
+\item Architected and delivered a client-accepted \textbf{Proof of Concept (PoC) for Zions Bank}; tuned complex \textbf{Oracle SQL / PL/SQL} queries, stored procedures, and data access layers to accelerate query execution by \textbf{25\%}.
+
+\item Executed end-to-end backend API integration, data validation pipelines, and frontend verification using \textbf{Postman}, \textbf{AWS}, and \textbf{Unix shell scripting}; automated testing and deployment workflows following CI/CD practices.
+
+\item Built modular frontend components using \textbf{FEE Web (Angular-based enterprise framework)} with strict form validation, reactive patterns, and real-time REST API integrations for core banking workflows.
+
+\item Collaborated in Agile Scrum teams to deliver sprint commitments; conducted code reviews, maintained documentation, and ensured compliance with enterprise security and coding standards.
+
+\end{itemize}
+
+\vspace{1pt}
+
+\entry
+{Data Science Intern -- VCodez
+\hspace{2pt}
+\href{https://drive.google.com/file/d/1MUiyR5VtfOmQutr5kUR_pSrWpGUQyBYy/view}
+{\textcolor{linkblue}{[Link]}}}
+{Jan 2025 -- May 2025}
+
+\begin{itemize}
+
+\item Developed a multimodal vision-language application using \textbf{BLIP-2}, \textbf{Python}, and \textbf{Hugging Face Transformers} with interactive \textbf{Streamlit} and \textbf{Gradio} interfaces for automated natural language description and accessibility compliance.
+
+\item Conducted extensive data preprocessing, exploratory data analysis, and predictive modeling using \textbf{Scikit-learn}, \textbf{Pandas}, and ensemble learning techniques on Kaggle and benchmark datasets; evaluated models with AUC-ROC, precision, and recall metrics.
+
+\item Implemented memory optimization techniques including model quantization and batch inference for efficient deployment of transformer-based models on resource-constrained environments.
+
+\item Built end-to-end ML pipelines with automated data validation, feature engineering, model training, and evaluation; documented experiments and results for stakeholder review.
+
+\end{itemize}
+
+% =========================================================
+% PROJECTS
+% =========================================================
+
+\resumesection{PROJECTS}
+
+% ── Project 1: GenAI / Full-Stack ──────────────────────
+\entry
+{SEM Campaign Planning \& Keyword Intelligence Platform
+\hspace{2pt}
+\href{https://github.com/marideharshith21}
+{\textcolor{linkblue}{[Link]}}}
+{Jun 2025 -- Sep 2025}
+
+\begin{itemize}
+
+\item Architected and deployed an end-to-end SEM intelligence web application using \textbf{React} (frontend) and \textbf{FastAPI} (backend) to automate keyword research and marketing campaign architecture using \textbf{Google Gemini API} and structured prompt chaining.
+
+\item Engineered programmatic algorithms for keyword deduplication, automated \textbf{Cost-Per-Click (CPC) analysis}, and Shopping CPC bid recommendations, accelerating campaign setup time by \textbf{60\%}; connected \textbf{Google Ads API} for real-time keyword metrics, search volume, and competitor bid data.
+
+\item Integrated \textbf{Google Gemini LLM} using structured prompt chaining to cluster multi-thousand search queries into cohesive ad groups (Brand, Competitor, Category, Informational, and Location-based) with high precision.
+
+\item Built asynchronous backend endpoints with \textbf{FastAPI} for scalable API processing; implemented RESTful API design with proper error handling, logging, and monitoring for production readiness.
+
+\item Designed responsive React frontend with modular components, real-time data visualization, and interactive campaign management dashboard for marketing team collaboration.
+
+\end{itemize}
+
+\vspace{1pt}
+
+% ── Project 2: Conversational AI / Agentic Workflow ────
+\entry
+{MediBot -- Autonomous Medical Receptionist \& Agentic Triage Assistant
+\hspace{2pt}
+\href{https://github.com/marideharshith21}
+{\textcolor{linkblue}{[Link]}}}
+{Dec 2024 -- Apr 2025}
+
+\begin{itemize}
+
+\item Developed an agentic conversational assistant using \textbf{Dialogflow NLU} and LLM workflows with custom \textbf{Flask} webhook endpoints to automate hospital triage, patient appointment scheduling, and FAQ resolution with \textbf{95\%+} triage accuracy.
+
+\item Implemented conversation state persistence using \textbf{MongoDB} to record patient chat history, appointment booking states, emergency request logs, and doctor rosters with full audit trail.
+
+\item Integrated \textbf{Dialogflow NLU} with custom Flask webhook endpoints to execute dynamic business logic, schedule lookups, and automate triage decision flows; validated all REST API payloads and webhook edge cases with \textbf{Postman}.
+
+\item Engineered an interactive UI using \textbf{Streamlit} for real-time monitoring and administration; built comprehensive test suites covering conversation flows, error handling, and integration scenarios.
+
+\item Designed escalation protocols for emergency queries with automated routing to medical staff; implemented fallback mechanisms and confidence thresholding for safe AI-assisted triage.
+
+\end{itemize}
+
+\vspace{1pt}
+
+% ── Project 3: Vision-Language / Multimodal AI ─────────
+\entry
+{Multimodal Image Captioning System (BLIP-2 \& Transformers)
+\hspace{2pt}
+\href{https://github.com/marideharshith21}
+{\textcolor{linkblue}{[Link]}}}
+{Jan 2025 -- May 2025}
+
+\begin{itemize}
+
+\item Implemented a multimodal vision-language system integrating \textbf{Salesforce BLIP-2} with \textbf{Hugging Face Transformers} and \textbf{PyTorch} to generate context-aware natural language descriptions for arbitrary image inputs with memory optimization via quantization.
+
+\item Leveraged \textbf{Hugging Face Transformers} and \textbf{PyTorch} for model inference, memory optimization (quantization), and batch image evaluation; reduced inference latency by 40\% through 8-bit quantization and optimized batching.
+
+\item Constructed interactive evaluation interfaces in \textbf{Streamlit} and \textbf{Gradio}, enabling users to upload images and adjust generation temperature, beam search parameters, and max token length for fine-grained control.
+
+\item Enhanced digital accessibility by demonstrating automated alternative text generation for visually impaired accessibility compliance; validated output quality using BLEU, METEOR, and CIDEr metrics against human captions.
+
+\item Designed modular pipeline architecture supporting multiple vision encoders and language models for extensibility; documented API usage and deployment considerations for production environments.
+
+\end{itemize}
+
+\vspace{1pt}
+
+% ── Project 4: Predictive ML / Analytics ───────────────
+\entry
+{Predictive Workforce Analytics \& Employee Attrition Model
+\hspace{2pt}
+\href{https://github.com/marideharshith21}
+{\textcolor{linkblue}{[Link]}}}
+{Sep 2023 -- Nov 2023}
+
+\begin{itemize}
+
+\item Built an ML classification engine using \textbf{Scikit-learn} (Decision Tree Classifier) on 1,470 employee records to predict employee attrition risk with \textbf{82\% accuracy}; engineered feature pipelines extracting turnover predictors such as overtime, job satisfaction, and salary stagnation.
+
+\item Executed feature engineering and data processing pipelines inside \textbf{Databricks} utilizing \textbf{SQL} and \textbf{Pandas} for scalable ETL; implemented automated data validation, missing value imputation, and categorical encoding workflows.
+
+\item Designed interactive \textbf{Power BI} executive dashboards visualizing key workforce metrics, turnover velocity, and retention trends to support strategic HR decision-making and preventive retention interventions.
+
+\item Delivered actionable business insights enabling preventive retention interventions and quantifying potential cost savings for talent operations; presented findings to stakeholders with clear ROI projections.
+
+\item Performed model comparison across multiple algorithms (Random Forest, XGBoost, Logistic Regression) with cross-validation; selected Decision Tree for interpretability and business alignment with HR domain requirements.
+
+\end{itemize}
+
+\vspace{1pt}
+
+% ── Project 5: Computer Vision / Transfer Learning ─────
+\entry
+{Deep Learning Classifier for Ocular Disease Detection
+\hspace{2pt}
+\href{https://github.com/marideharshith21}
+{\textcolor{linkblue}{[Link]}}}
+{Sep 2023 -- Nov 2023}
+
+\begin{itemize}
+
+\item Developed a transfer learning computer vision model based on \textbf{VGG19} to classify retinal images into 4 categories: Normal, Cataract, Diabetic Retinopathy, and Glaucoma, achieving \textbf{90\% accuracy} on test datasets.
+
+\item Implemented extensive image preprocessing pipelines using \textbf{OpenCV}, including resizing, normalization, contrast enhancement (CLAHE), and data augmentation (rotation, flip, zoom) to prevent overfitting and improve generalization.
+
+\item Evaluated model performance using confusion matrices, precision, recall, F1-score, and AUC-ROC curves; achieved 90\% classification accuracy with balanced performance across all 4 disease classes.
+
+\item Applied transfer learning with pre-trained ImageNet weights; fine-tuned final dense layers while freezing early convolutional blocks for efficient training on limited medical imaging data.
+
+\item Built reproducible training pipeline with experiment tracking, hyperparameter logging, and model checkpointing; documented clinical relevance and limitations for medical AI deployment considerations.
+
+\end{itemize}
+
+\vspace{1pt}
+
+% ── Project 6: Enterprise Full-Stack ───────────────────
+\entry
+{Enterprise Hotel Management \& Reservation Portal
+\hspace{2pt}
+\href{https://github.com/marideharshith21}
+{\textcolor{linkblue}{[Link]}}}
+{Sep 2023 -- Nov 2023}
+
+\begin{itemize}
+
+\item Engineered a full-stack hotel management portal using \textbf{Java}, \textbf{Spring Boot}, and \textbf{Angular} to manage room availability, guest check-in/out, and real-time billing via clean layered RESTful API architecture.
+
+\item Designed clean layered architecture with RESTful API endpoints connecting client-side dynamic forms to persistent relational database transactions; implemented service, repository, and controller layers following Spring best practices.
+
+\item Optimized database queries using \textbf{Spring JDBC} and \textbf{MySQL} with parameterized statements, indexed schema, and ACID-compliant transactional boundaries; reduced query latency by 30\% through query optimization.
+
+\item Built responsive Angular frontend modules with modular components, reactive form validation, route guards, and error-handling interceptors; implemented role-based access control for admin, staff, and guest portals.
+
+\item Integrated comprehensive booking workflow: room search, availability checking, reservation creation, check-in/check-out processing, billing generation, and payment tracking with audit logging.
+
+\end{itemize}
+
+\vspace{1pt}
+
+% ── Project 7: Enterprise Banking / Microservices ──────
+\entry
+{Banking Microservices \& PoC Architecture (TCS BaNCS \& Zions Bank)
+\hspace{2pt}
+\href{https://github.com/marideharshith21}
+{\textcolor{linkblue}{[Link]}}}
+{Nov 2025 -- Present}
+
+\begin{itemize}
+
+\item Engineered core banking microservices for \textbf{TCS BaNCS} using \textbf{Java} and \textbf{Spring Boot}, implementing robust \textbf{RESTful APIs} and domain-driven design patterns for account management, transaction processing, and customer onboarding.
+
+\item Spearheaded technical feasibility and architecture for a high-priority \textbf{Zions Bank PoC}, designing key solution architectures and presenting technical deliverables directly to stakeholders; secured client acceptance for the PoC.
+
+\item Optimized \textbf{Oracle SQL} database performance, tuning complex queries, stored procedures, and data access layers to reduce query execution latency by \textbf{25\%}; implemented indexing strategies and query plan analysis.
+
+\item Constructed modular frontend components using \textbf{FEE Web (Angular-based enterprise framework)} with strict form validation, real-time API integrations, and responsive design for banking operations.
+
+\item Implemented CI/CD pipelines for automated build, test, and deployment; ensured compliance with banking security standards, audit requirements, and regulatory frameworks for financial services.
+
+\end{itemize}
+
+\vspace{1pt}
+
+% ── Project 8: Deep Learning / CNN ─────────────────────
+\entry
+{Fashion-MNIST Multi-Class Classifier using Convolutional Neural Networks (CNN)
+\hspace{2pt}
+\href{https://github.com/marideharshith21}
+{\textcolor{linkblue}{[Link]}}}
+{Sep 2023 -- Nov 2023}
+
+\begin{itemize}
+
+\item Designed and trained a deep \textbf{Convolutional Neural Network (CNN)} architecture to classify fashion apparel images into 10 discrete categories on the Fashion-MNIST dataset, attaining \textbf{92\% accuracy} through systematic learning rate scheduling and hyperparameter tuning.
+
+\item Architected convolutional layers, max-pooling, batch normalization, and dropout layers to optimize gradient flow and regularize against overfitting; experimented with varying kernel sizes, filter counts, and depth configurations.
+
+\item Implemented systematic learning rate scheduling (step decay, cosine annealing) and hyperparameter tuning using validation curves; compared optimizer performance (Adam, SGD with momentum, RMSprop) for convergence optimization.
+
+\item Evaluated model performance using confusion matrices, per-class precision/recall, and top-k accuracy metrics; achieved 92\% test accuracy with balanced performance across all 10 fashion categories.
+
+\item Built reproducible training pipeline with \textbf{TensorFlow/Keras} including data augmentation, early stopping, model checkpointing, and TensorBoard visualization for experiment tracking and debugging.
+
+\end{itemize}
+
+\vspace{1pt}
+
+% ── Project 9: Automation / Network Simulation ─────────
+\entry
+{Enterprise Network Topology \& IoT Automation Simulation
+\hspace{2pt}
+\href{https://github.com/marideharshith21}
+{\textcolor{linkblue}{[Link]}}}
+{Sep 2023 -- Nov 2023}
+
+\begin{itemize}
+
+\item Architected simulated enterprise network topologies implementing subnets, VLANs, routing protocols (OSPF, EIGRP), and firewall access control lists (ACLs) using \textbf{Cisco Packet Tracer} for multi-site enterprise scenarios.
+
+\item Configured IoT sensor automation workflows within simulated smart environments, demonstrating automated device telemetry, packet routing, and threshold-based alerting for environmental monitoring use cases.
+
+\item Validated end-to-end network performance, packet latency, and security policies under varying traffic loads; implemented QoS policies for voice/video traffic prioritization and bandwidth management.
+
+\item Designed network segmentation strategies with DMZ, internal zones, and management networks; configured NAT, VPN, and secure remote access for distributed workforce scenarios.
+
+\item Documented network architecture diagrams, device configurations, and troubleshooting procedures; created automated configuration backup and change management workflows using \textbf{Python scripting}.
+
+\end{itemize}
+
+% =========================================================
+% SKILLS
+% =========================================================
+
+\resumesection{SKILLS}
+
+\begin{itemize}
+
+\item \textbf{Languages --} Python, SQL, PL/SQL, Java, JavaScript, TypeScript, Unix Shell Scripting, C++, MATLAB.
+
+\item \textbf{Data Engineering \& Platforms --} Apache Spark, PySpark, Databricks, ETL Pipelines, SQL Query Optimization, Data Validation.
+
+\item \textbf{Cloud \& DevOps --} Microsoft Azure, Google Cloud Platform (GCP), AWS, Git, CI/CD, Postman.
+
+\item \textbf{Backend \& Microservices --} FastAPI, Spring Boot, REST APIs, Flask, Spring MVC, JDBC, Microservices Architecture.
+
+\item \textbf{AI, LLM \& Automation --} Generative AI, Large Language Models (LLMs), RAG, Agentic AI, Prompt Engineering, Hugging Face Transformers, BLIP-2.
+
+\item \textbf{Machine Learning \& Libraries --} Scikit-learn, TensorFlow, Keras, NumPy, Pandas, Matplotlib, OpenCV, Power BI.
+
+\item \textbf{Testing \& QA --} API Testing, UI Verification, Test Automation, Postman, End-to-End Testing, Bug Reproduction.
+
+\item \textbf{Databases --} Oracle SQL, MySQL, MongoDB, PostgreSQL, Derby.
+
+\item \textbf{Frontend --} Angular, React.js, Streamlit, HTML5, CSS3.
+
+\end{itemize}
+
+% =========================================================
+% CERTIFICATES
+% =========================================================
+
+\resumesection{CERTIFICATES}
+
+\begin{itemize}[itemsep=1pt]
+
+\item \textbf{Google Cloud Digital Leader Certification}
+\hspace{2pt}
+\href{https://www.credly.com/badges/85e1602f-c8c9-49d6-98ad-3ba8ffd6158c/public_url}{\textcolor{linkblue}{[Link]}}
+\quad $\vert$ \quad
+\textbf{Microsoft Certified: Azure AI Fundamentals}
+\hspace{2pt}
+\href{https://www.credly.com/badges/f3268f60-72dd-479e-8951-a86833a0c7db/linked_in_profile}{\textcolor{linkblue}{[Link]}}
+
+\item \textbf{Smart Bridge -- Applied Data Science Certification}
+\hspace{2pt}
+\href{https://smartinternz.com/internships/google_developers/df98c1a05903d0856f19af13ea5b755d}{\textcolor{linkblue}{[Link]}}
+\quad $\vert$ \quad
+\textbf{Enterprise Automation Certification (Workato)}
+\hspace{2pt}
+\href{https://credentials.workato.com/8675fbe8-7a3e-4df6-920e-e5d8fe1ad756#acc.e9kg4c2V}{\textcolor{linkblue}{[Link]}}
+
+\item \textbf{Exploring IoT and Networking with Cisco Packet Tracer}
+\hspace{2pt}
+\href{https://www.credly.com/badges/e723b676-1eb0-43d6-8ccd-1c8b905dddff/linked_in_profile}{\textcolor{linkblue}{[Link]}}
+
+\end{itemize}
+
+% =========================================================
+% ACTIVITIES
+% =========================================================
+
+\resumesection{ACTIVITIES}
+
+\begin{itemize}
+
+\item \textbf{VITeach Club Member} -- Teaching Tamil Nadu government school students from classes 1 to 5.
+
+\item Participated in ``Code with Cisco''.
+
+\end{itemize}
+
+\end{document}

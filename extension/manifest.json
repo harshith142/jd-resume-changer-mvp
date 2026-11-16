@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "JD Resume Changer",
+  "version": "0.1.0",
+  "description": "Tailor a master Overleaf resume to a job description with Gemini and compile a PDF locally.",
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "storage",
+    "downloads"
+  ],
+  "host_permissions": [
+    "http://127.0.0.1:8765/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["jszip.min.js"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

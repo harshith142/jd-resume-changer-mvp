@@ -1,0 +1,88 @@
+\documentclass[10pt,a4paper]{article}
+
+% =========================================================
+% MASTER RESUME — FULL PROJECT CATALOG
+% This is a 2-page source document containing ALL 9 projects.
+% The AI tailoring system will SELECT the top 3-4 projects
+% based on the job description and produce a 1-page output.
+% DO NOT compile this directly for submission.
+% =========================================================
+
+% =========================================================
+% PACKAGES
+% =========================================================
+\usepackage[
+    a4paper,
+    top=0.25in,
+    bottom=0.25in,
+    left=0.38in,
+    right=0.38in
+]{geometry}
+
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\usepackage{lmodern}
+
+% =========================================================
+% PAGE SETTINGS
+% =========================================================
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+
+% =========================================================
+% COLORS
+% =========================================================
+
+\definecolor{sectionblack}{RGB}{0,0,0}
+\definecolor{linkblue}{RGB}{0,0,180}
+
+% =========================================================
+% SECTION HEADING
+% =========================================================
+
+\newcommand{\resumesection}[1]{%
+    \vspace{2pt}
+    \noindent
+    \colorbox{sectionblack}{%
+        \parbox{\dimexpr\linewidth-2\fboxsep\relax}{%
+            \centering
+            \textcolor{white}{\textbf{\normalsize #1}}
+        }%
+    }%
+    \vspace{1pt}
+}
+
+% =========================================================
+% ENTRY HEADING
+% =========================================================
+
+\newcommand{\entry}[2]{%
+    \noindent
+    \begin{tabularx}{\linewidth}{@{}X r@{}}
+        \textbf{#1} & \textbf{#2}
+    \end{tabularx}
+    \vspace{-2pt}
+}
+
+% =========================================================
+% BULLET SETTINGS
+% =========================================================
+
+\setlist[itemize]{
+    leftmargin=14pt,
+    labelsep=4pt,
+    itemsep=0pt,
+    topsep=0pt,
+    parsep=0pt,
+    partopsep=0pt
+}
+
+% =========================================================
+% DOCUMENT
+% =========================================================
+\begin{document}\begin{center}{\fontsize{19}{21}\selectfont\textbf{HARSHITH MARIDE}}\vspace{1pt}{\small 9398892826\quad | \quad\href{mailto:marideharshith21@gmail.com}{\textcolor{linkblue}{marideharshith21@gmail.com}}\quad | \quad\href{https://www.linkedin.com/in/maride-harshith-1569931a7/}{\textcolor{linkblue}{LinkedIn}}}\end{center}\vspace{-5pt}\resumesection{EDUCATION}\renewcommand{\arraystretch}{0.85}\begin{tabularx}{\linewidth}{@{} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X >{\centering\arraybackslash}p{1.25cm} >{\centering\arraybackslash}p{1.0cm} @{}}\textbf{Program}& \textbf{Institute}& \textbf{CGPA}& \textbf{Year}\\[-1pt]\hline B.Tech CSE -- AI \& Robotics& Vellore Institute of Technology, Chennai& 8.92& 2025\\XII& Narayana Junior College, Hyderabad& 93.1& 2020\\X& Narayana School, Tirupati& 10& 2018\end{tabularx}\resumesection{EXPERIENCE}\entry{Assistant System Engineer (ASE) -- TCS}{Nov 2025 -- Present}\begin{itemize}\item Working as an \textbf{Assistant System Engineer at Tata Consultancy Services (TCS)}, developing enterprise banking microservices and portal modules using \textbf{Java}, \textbf{Spring Boot}, and \textbf{Angular} for the \textbf{TCS BaNCS} suite (CTBC Bank).\item Architected and delivered a client-accepted \textbf{Proof of Concept (PoC) for Zions Bank}; tuned complex \textbf{Oracle SQL / PL/SQL} queries, stored procedures, and data access layers to accelerate query execution by \textbf{25\%}.\item Executed end-to-end backend API integration, data validation pipelines, and frontend verification using \textbf{Postman}, \textbf{AWS}, and \textbf{Unix shell scripting}; automated testing and deployment workflows following CI/CD practices.\item Collaborated in Agile Scrum teams to deliver sprint commitments; conducted code reviews, maintained documentation, and ensured compliance with enterprise security and coding standards.\end{itemize}\vspace{1pt}\resumesection{PROJECTS}\entry{Banking Microservices \& PoC Architecture (TCS BaNCS \& Zions Bank)\hspace{2pt}\href{https://github.com/marideharshith21}{\textcolor{linkblue}{[Link]}}}{Nov 2025 -- Present}\begin{itemize}\item Engineered core banking microservices for \textbf{TCS BaNCS} using \textbf{Java} and \textbf{Spring Boot}, implementing robust \textbf{RESTful APIs} and domain-driven design patterns for account management and transaction processing.\item Spearheaded technical feasibility and architecture for a high-priority \textbf{Zions Bank PoC}, designing key solution architectures and presenting technical deliverables directly to stakeholders; secured client acceptance.\item Optimized \textbf{Oracle SQL} database performance, tuning complex queries, stored procedures, and data access layers to reduce query execution latency by \textbf{25\%}.\end{itemize}\vspace{1pt}\entry{Enterprise Hotel Management \& Reservation Portal\hspace{2pt}\href{https://github.com/marideharshith21}{\textcolor{linkblue}{[Link]}}}{Sep 2023 -- Nov 2023}\begin{itemize}\item Engineered a full-stack hotel management portal using \textbf{Java}, \textbf{Spring Boot}, and \textbf{Angular} to manage room availability, guest check-in/out, and real-time billing via clean layered RESTful API architecture.\item Optimized database queries using \textbf{Spring JDBC} and \textbf{MySQL} with parameterized statements, indexed schema, and transactional boundaries; reduced query latency by 30\%.\end{itemize}\vspace{1pt}\entry{MediBot -- Autonomous Medical Receptionist \& Agentic Triage Assistant\hspace{2pt}\href{https://github.com/marideharshith21}{\textcolor{linkblue}{[Link]}}}{Dec 2024 -- Apr 2025}\begin{itemize}\item Developed an agentic conversational assistant using \textbf{Dialogflow NLU} and LLM workflows with custom \textbf{Flask} webhook endpoints to automate hospital triage and REST API communication; validated payloads with \textbf{Postman}.\item Implemented conversation state persistence using \textbf{MongoDB} to record patient chat history, appointment booking states, and emergency request logs.\end{itemize}\resumesection{SKILLS}\begin{itemize}\item \textbf{Languages --} Java, SQL, PL/SQL, Python, JavaScript, TypeScript, Unix Shell Scripting, C++, MATLAB.\item \textbf{Backend \& Microservices --} Spring Boot, REST APIs, FastAPI, Flask, Spring MVC, JDBC, Microservices Architecture.\item \textbf{Cloud \& DevOps --} AWS, Microsoft Azure, Google Cloud Platform (GCP), Git, CI/CD, Postman.\item \textbf{Databases --} Oracle SQL, MySQL, MongoDB, PostgreSQL, Derby.\item \textbf{Frontend --} Angular, React.js, Streamlit, HTML5, CSS3.\item \textbf{Testing \& QA --} API Testing, UI Verification, Test Automation, Postman, End-to-End Testing.\end{itemize}\resumesection{CERTIFICATES}\begin{itemize}[itemsep=1pt]\item \textbf{Google Cloud Digital Leader Certification}\hspace{2pt}\href{https://www.credly.com/badges/85e1602f-c8c9-49d6-98ad-3ba8ffd6158c/publicurl}{\textcolor{linkblue}{[Link]}}\quad $\vert$ \quad\textbf{Microsoft Certified: Azure AI Fundamentals}\hspace{2pt}\href{https://www.credly.com/badges/f3268f60-72dd-479e-8951-a86833a0c7db/linkedin_profile}{\textcolor{linkblue}{[Link]}}\end{itemize}\end{document}

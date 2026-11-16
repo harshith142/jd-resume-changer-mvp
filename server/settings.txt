@@ -1,0 +1,4 @@
+root: C:\Users\harshith1402\Downloads\jd-resume-changer-mvp\server 
+path: C:\Program Files\nodejs 
+arch: 64 
+proxy: none

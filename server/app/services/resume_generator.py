@@ -1,0 +1,640 @@
+import json
+import httpx
+from typing import Dict, Any, Optional
+
+from app.config import get_settings
+
+settings = get_settings()
+
+GENERATE_RESUME_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "latex": {
+            "type": "string",
+            "description": "Complete tailored LaTeX resume source."
+        },
+        "changes": {
+            "type": "array",
+            "items": {"type": "string"}
+        },
+        "preserved": {
+            "type": "array",
+            "items": {"type": "string"}
+        },
+        "ats_score": {
+            "type": "number",
+            "description": "ATS compatibility score 0-100. Must be >= 85."
+        }
+    },
+    "required": ["latex", "changes", "preserved", "ats_score"]
+}
+
+
+async def generate_tailored_resume(
+    master_tex: str,
+    jd_profile: Dict[str, Any],
+    match_result: Dict[str, Any],
+    provider: str,
+    api_key: Optional[str],
+    model: Optional[str],
+    ollama_host: Optional[str] = None,
+) -> Dict[str, Any]:
+    """Generate a tailored resume from master resume, JD profile, and match analysis."""
+
+    prompt = (
+        "You are an expert resume editor and LaTeX engineer.\n\n"
+        "Your task is to tailor an existing resume to a specific job\n"
+        "description while preserving the candidate's factual information.\n\n"
+        "============================================================\n"
+        "JOB DESCRIPTION\n"
+        "============================================================\n\n"
+        f"{json.dumps(jd_profile, indent=2)}\n\n"
+        "============================================================\n"
+        "MATCH ANALYSIS\n"
+        "============================================================\n\n"
+        f"{json.dumps(match_result, indent=2)}\n\n"
+        "============================================================\n"
+        "MASTER LATEX RESUME\n"
+        "============================================================\n\n"
+        f"{master_tex}\n\n"
+        "============================================================\n"
+        "OBJECTIVE\n"
+        "============================================================\n\n"
+        "Create a highly ATS-friendly version of the MASTER LATEX RESUME\n"
+        "for the supplied job description.\n\n"
+        "The result must remain truthful.\n\n"
+        "============================================================\n"
+        "STRICT LATEX OUTPUT RULES\n"
+        "============================================================\n\n"
+        "The output MUST be pure, valid LaTeX.\n\n"
+        "The generated content will be saved directly as a `.tex` file\n"
+        "and compiled using pdflatex.\n\n"
+        "Therefore, DO NOT use Markdown syntax anywhere in the LaTeX.\n\n"
+        "============================================================\n"
+        "1. NO MARKDOWN\n"
+        "============================================================\n\n"
+        "NEVER use Markdown bold syntax:\n\n"
+        "WRONG:\n"
+        "**Java**\n\n"
+        "CORRECT:\n"
+        "\\textbf{Java}\n\n"
+        "WRONG:\n"
+        "**HARSHITH MARIDE**\n\n"
+        "CORRECT:\n"
+        "\\textbf{HARSHITH MARIDE}\n\n"
+        "NEVER use Markdown italic syntax:\n\n"
+        "WRONG:\n"
+        "*Software Engineer*\n\n"
+        "CORRECT:\n"
+        "\\textit{Software Engineer}\n\n"
+        "NEVER use Markdown links:\n\n"
+        "WRONG:\n"
+        "[LinkedIn](https://www.linkedin.com/...)\n\n"
+        "CORRECT:\n"
+        "\\href{https://www.linkedin.com/...}{LinkedIn}\n\n"
+        "NEVER use Markdown code fences.\n\n"
+        "WRONG:\n\n"
+        "```latex\n"
+        "\\documentclass{article}\n"
+        "...\n\n"
+        "CORRECT:\n\n"
+        "\\documentclass{article}\n"
+        "...\n\n"
+        "Do NOT output ```latex.\n\n"
+        "Do NOT output ```.\n\n"
+        "Do NOT output Markdown headings.\n\n"
+        "Do NOT output Markdown tables.\n\n"
+        "============================================================\n"
+        "2. LATEX DOCUMENT STRUCTURE\n\n"
+        "The latex field MUST contain a complete LaTeX document.\n\n"
+        "It MUST begin with:\n\n"
+        "\\documentclass\n\n"
+        "It MUST contain:\n\n"
+        "\\begin{document}\n\n"
+        "It MUST end with:\n\n"
+        "\\end{document}\n\n"
+        "The output must be directly usable as a .tex file.\n\n"
+        "Do not add any explanation before \\documentclass.\n\n"
+        "Do not add any explanation after \\end{document}.\n\n"
+        "============================================================\n"
+        "3. BOLD TEXT\n\n"
+        "Use LaTeX commands for bold text.\n\n"
+        "WRONG:\n\n"
+        "\\textbf{Java}\n\n"
+        "CORRECT:\n\n"
+        "\\textbf{Java}\n\n"
+        "WRONG:\n\n"
+        "Spring Boot\n\n"
+        "CORRECT:\n\n"
+        "\\textbf{Spring Boot}\n\n"
+        "Do not place Markdown ** characters inside LaTeX.\n\n"
+        "============================================================\n"
+        "4. ITALIC TEXT\n\n"
+        "Use:\n\n"
+        "\\textit{Text}\n\n"
+        "Do not use Markdown *text*.\n\n"
+        "============================================================\n"
+        "5. HYPERLINKS\n\n"
+        "All hyperlinks MUST use:\n\n"
+        "\\href{URL}{display text}\n\n"
+        "Example:\n\n"
+        "\\href{https://www.linkedin.com/in/example/}{LinkedIn}\n\n"
+        "Email:\n\n"
+        "\\href{mailto:example@gmail.com}{example@gmail.com}\n\n"
+        "GitHub:\n\n"
+        "\\href{https://github.com/example}{GitHub}\n\n"
+        "Do NOT use:\n\n"
+        "LinkedIn\n\n"
+        "Do NOT use:\n\n"
+        "\\href{URL}\n\n"
+        "Do NOT modify valid URLs unnecessarily.\n\n"
+        "Preserve existing URLs from the master resume.\n\n"
+        "============================================================\n"
+        "6. LATEX SPECIAL CHARACTERS\n\n"
+        "Escape LaTeX special characters when they appear as normal text.\n\n"
+        "Use:\n\n"
+        "\\%\n\n"
+        "for percentage signs.\n\n"
+        "Use:\n\n"
+        "\\&\n\n"
+        "for ampersands.\n\n"
+        "Use:\n\n"
+        "\\#\n\n"
+        "for hash symbols.\n\n"
+        "Use:\n\n"
+        "\\_\n\n"
+        "for underscores.\n\n"
+        "Use:\n\n"
+        "\\$\n\n"
+        "for dollar signs.\n\n"
+        "Use:\n\n"
+        "\\{\n\n"
+        "for literal opening braces.\n\n"
+        "Use:\n\n"
+        "\\}\n\n"
+        "for literal closing braces.\n\n"
+        "Use:\n\n"
+        "\\textbackslash{}\n\n"
+        "for a literal backslash when necessary.\n\n"
+        "Example:\n\n"
+        "WRONG:\n\n"
+        "90% accuracy\n\n"
+        "CORRECT:\n\n"
+        "90\\% accuracy\n\n"
+        "Example:\n\n"
+        "WRONG:\n\n"
+        "C++ & Java\n\n"
+        "CORRECT:\n\n"
+        "C++ \\& Java\n\n"
+        "============================================================\n"
+        "7. PRESERVE EXISTING LATEX COMMANDS\n\n"
+        "The MASTER RESUME is the source template.\n\n"
+        "Preserve existing custom commands such as:\n\n"
+        "\\resumesection\n\n"
+        "\\entry\n\n"
+        "and existing formatting commands whenever possible.\n\n"
+        "Do not redesign the resume.\n\n"
+        "Do not replace the existing document structure unnecessarily.\n\n"
+        "Do not introduce a completely different LaTeX template.\n\n"
+        "============================================================\n"
+        "8. PRESERVE PACKAGES\n\n"
+        "Keep the existing packages from the master resume unless a\n"
+        "package is genuinely required for a valid modification.\n\n"
+        "Do not unnecessarily add packages.\n\n"
+        "Do not remove packages that are required by existing commands.\n\n"
+        "The generated document should remain compatible with pdflatex.\n\n"
+        "============================================================\n"
+        "9. PRESERVE ONE-PAGE DESIGN\n\n"
+        "The master resume is intentionally designed to fit on one A4 page.\n\n"
+        "Keep the resume to ONE PAGE.\n\n"
+        "Do not add large spacing.\n\n"
+        "Do not add unnecessary paragraphs.\n\n"
+        "Do not add unnecessary sections.\n\n"
+        "Do not increase font sizes significantly.\n\n"
+        "Do not introduce graphics or images.\n\n"
+        "Do not add a profile photo.\n\n"
+        "Do not introduce large tables.\n\n"
+        "Do not introduce multi-column layouts unless they already exist.\n\n"
+        "Keep the existing compact layout.\n\n"
+        "============================================================\n"
+        "10. PRESERVE HEADER\n\n"
+        "Preserve:\n\n"
+        "Candidate name\n\n"
+        "Phone number\n\n"
+        "Email address\n\n"
+        "LinkedIn URL\n\n"
+        "Do not invent contact information.\n\n"
+        "Do not change contact information.\n\n"
+        "Do not remove existing valid contact information.\n\n"
+        "============================================================\n"
+        "11. PRESERVE EDUCATION\n\n"
+        "Do not invent education.\n\n"
+        "Do not change:\n\n"
+        "University names\n\n"
+        "Degree names\n\n"
+        "CGPA\n\n"
+        "Graduation years\n\n"
+        "School names\n\n"
+        "Academic scores\n\n"
+        "Only modify formatting if necessary.\n\n"
+        "============================================================\n"
+        "12. PRESERVE EXPERIENCE\n\n"
+        "Do not invent:\n\n"
+        "Companies\n\n"
+        "Job titles\n\n"
+        "Employment dates\n\n"
+        "Responsibilities\n\n"
+        "Achievements\n\n"
+        "Technologies\n\n"
+        "Metrics\n\n"
+        "Client names\n\n"
+        "Projects\n\n"
+        "Experience duration\n\n"
+        "The existing master resume is the source of truth.\n\n"
+        "Only rewrite an experience bullet when the new wording is\n"
+        "supported by evidence already present in the master resume.\n\n"
+        "============================================================\n"
+        "13. EVIDENCE BOUNDARY\n\n"
+        "A technology appearing in the SKILLS section does NOT\n"
+        "automatically prove that the candidate used that technology\n"
+        "in a specific job or project.\n\n"
+        "For example, if the resume contains:\n\n"
+        "Experience:\n"
+        "\"Contributing to enterprise banking applications across\n"
+        "frontend and backend modules.\"\n\n"
+        "Skills:\n"
+        "\"Java, Spring Boot\"\n\n"
+        "DO NOT create:\n\n"
+        "\"Developed backend applications using Java and Spring Boot.\"\n\n"
+        "unless the master resume explicitly provides evidence connecting\n"
+        "Java and Spring Boot to that experience.\n\n"
+        "Instead, preserve the factual evidence.\n\n"
+        "You may emphasize Java and Spring Boot in the SKILLS section.\n\n"
+        "Do not create false experience claims.\n\n"
+        "============================================================\n"
+        "14. PROJECTS\n\n"
+        "The master resume contains a verified 9-project catalog with 4-5 bullet points each.\n\n"
+        "SELECT the top 3-4 most relevant projects for the target JD.\n\n"
+        "Selection & Formatting criteria:\n"
+        "- Prioritize projects whose tech stack and domain overlap with the JD keywords.\n"
+        "- Prioritize projects from keywords_to_emphasize in the match analysis.\n"
+        "- For each chosen project, include 3-4 strong, quantifiable bullet points (STAR format).\n"
+        "- Maintain ATS-friendly keyword spellings (FastAPI, Scikit-learn, Hugging Face Transformers, BLIP-2, Spring Boot).\n"
+        "- Format concisely so that the full resume fits on exactly ONE PAGE.\n\n"
+        "Preserve actual project names.\n\n"
+        "Preserve actual project dates.\n\n"
+        "Preserve actual project technologies.\n\n"
+        "Preserve actual project achievements.\n\n"
+        "You may:\n\n"
+        "reorder projects by relevance\n"
+        "reorder bullets\n"
+        "rewrite existing evidence for clarity\n"
+        "emphasize supported JD terminology\n\n"
+        "You may NOT:\n\n"
+        "invent project features\n"
+        "invent technologies\n"
+        "invent metrics\n"
+        "invent users\n"
+        "invent performance improvements\n"
+        "invent deployment details\n"
+        "invent architecture\n\n"
+        "============================================================\n"
+        "15. SKILLS\n\n"
+        "Prioritize skills that are already present in the master resume\n"
+        "and relevant to the JD.\n\n"
+        "For example, if the master resume contains:\n\n"
+        "Java\n"
+        "Spring Boot\n"
+        "REST APIs\n"
+        "SQL\n"
+        "Git\n"
+        "React.js\n\n"
+        "and the JD requests these skills, they may be placed earlier\n"
+        "in the Skills section.\n\n"
+        "Do NOT add:\n\n"
+        "Docker\n\n"
+        "AWS\n\n"
+        "Microservices\n\n"
+        "or any other technology unless it is explicitly supported\n"
+        "by the master resume.\n\n"
+        "Do not add a missing JD technology simply to increase ATS score.\n\n"
+        "============================================================\n"
+        "16. ATS OPTIMIZATION\n\n"
+        "Use supported JD keywords naturally.\n\n"
+        "Prioritize:\n\n"
+        "keywords_to_emphasize\n\n"
+        "from the match analysis.\n\n"
+        "A keyword may be used in:\n\n"
+        "Skills\n"
+        "Experience\n"
+        "Projects\n\n"
+        "ONLY when the master resume provides evidence supporting it.\n\n"
+        "Do not keyword stuff.\n\n"
+        "Do not repeat the same keyword unnaturally.\n\n"
+        "Do not insert unsupported keywords simply because they appear\n"
+        "in the job description.\n\n"
+        "TARGET ATS SCORE: >= 85/100.\n\n"
+        "Achieve this by:\n"
+        "- Maximising JD keyword coverage from supported evidence.\n"
+        "- Using strong action verbs (Architected, Engineered, Developed, Optimized).\n"
+        "- Including quantifiable achievements wherever present in the master resume.\n"
+        "- Using standard ATS-readable section headings.\n"
+        "- Prioritising the most JD-relevant projects (select top 3-4 from the master resume).\n\n"
+        "============================================================\n"
+        "17. MISSING SKILLS\n\n"
+        "Never add items from:\n\n"
+        "missing_skills\n\n"
+        "to the resume.\n\n"
+        "Never add items from:\n\n"
+        "keywords_not_supported\n\n"
+        "to the resume.\n\n"
+        "For example, if:\n\n"
+        "missing_skills:\n"
+        "Docker\n"
+        "AWS\n"
+        "Microservices\n\n"
+        "then the generated resume MUST NOT claim:\n\n"
+        "Docker experience\n\n"
+        "AWS experience\n\n"
+        "Microservices experience\n\n"
+        "============================================================\n"
+        "18. RELATED SKILLS\n\n"
+        "A related skill is NOT the same as a direct skill.\n\n"
+        "Do not convert a related skill into a direct claim.\n\n"
+        "Example:\n\n"
+        "JD:\n"
+        "AWS\n\n"
+        "Resume:\n"
+        "Google Cloud\n"
+        "Azure\n\n"
+        "Do NOT write:\n\n"
+        "\"AWS experience\"\n\n"
+        "Do NOT write:\n\n"
+        "\"Developed applications on AWS\"\n\n"
+        "unless AWS is explicitly supported by the master resume.\n\n"
+        "============================================================\n"
+        "19. RESPONSIBILITIES\n\n"
+        "Use matched responsibilities only when the resume evidence\n"
+        "supports the responsibility.\n\n"
+        "Do not convert a JD responsibility into a claimed achievement.\n\n"
+        "Example:\n\n"
+        "JD:\n"
+        "\"Write clean and maintainable code.\"\n\n"
+        "If the resume contains no evidence supporting this,\n"
+        "do NOT create:\n\n"
+        "\"Wrote clean and maintainable code.\"\n\n"
+        "============================================================\n"
+        "20. METRICS\n\n"
+        "NEVER invent metrics.\n\n"
+        "Do not invent:\n\n"
+        "percentages\n\n"
+        "performance improvements\n\n"
+        "latency\n\n"
+        "users\n\n"
+        "revenue\n\n"
+        "accuracy\n\n"
+        "cost savings\n\n"
+        "team size\n\n"
+        "deployment counts\n\n"
+        "API counts\n\n"
+        "response times\n\n"
+        "If the master resume says:\n\n"
+        "\"90% accuracy\"\n\n"
+        "you may preserve:\n\n"
+        "\"90% accuracy\"\n\n"
+        "But you may not change it to:\n\n"
+        "\"95% accuracy\"\n\n"
+        "============================================================\n"
+        "21. DATES\n\n"
+        "Preserve existing dates exactly.\n\n"
+        "Do not invent dates.\n\n"
+        "Do not change employment dates.\n\n"
+        "Do not change project dates.\n\n"
+        "Do not change graduation dates.\n\n"
+        "============================================================\n"
+        "22. EMPLOYERS AND CLIENTS\n\n"
+        "Preserve existing employer and client names.\n\n"
+        "Do not invent clients.\n\n"
+        "Do not infer clients.\n\n"
+        "Do not replace one employer with another.\n\n"
+        "============================================================\n"
+        "23. CERTIFICATIONS\n\n"
+        "Preserve existing certifications.\n\n"
+        "Do not invent certifications.\n\n"
+        "Do not add JD-required certifications unless they already\n"
+        "exist in the master resume.\n\n"
+        "Preserve certification links.\n\n"
+        "============================================================\n"
+        "24. LINKS\n\n"
+        "Preserve valid existing links.\n\n"
+        "For existing links use:\n\n"
+        "\\href{URL}{[Link]}\n\n"
+        "or an appropriate existing display label.\n\n"
+        "Do not convert URLs into Markdown.\n\n"
+        "Do not duplicate URLs.\n\n"
+        "Do not remove valid project links.\n\n"
+        "Do not invent URLs.\n\n"
+        "============================================================\n"
+        "25. SECTION ORDER\n\n"
+        "Prefer preserving the master resume's section order.\n\n"
+        "Do not create unnecessary new sections.\n\n"
+        "Do not create:\n\n"
+        "OBJECTIVE\n\n"
+        "DECLARATION\n\n"
+        "REFERENCES\n\n"
+        "unless they already exist in the master resume.\n\n"
+        "============================================================\n"
+        "26. CONTENT PRIORITIZATION\n\n"
+        "When space is limited, prioritize:\n\n"
+        "Relevant professional experience\n"
+        "Relevant technical skills\n"
+        "Relevant projects\n"
+        "Education\n"
+        "Certifications\n"
+        "Activities\n\n"
+        "Do not remove critical professional experience.\n\n"
+        "Do not remove contact information.\n\n"
+        "Do not remove education.\n\n"
+        "============================================================\n"
+        "27. ONE-PAGE SPACE MANAGEMENT\n\n"
+        "If the generated resume becomes too long:\n\n"
+        "First reduce unnecessary wording.\n\n"
+        "Then shorten verbose bullet points.\n\n"
+        "Then remove redundant phrases.\n\n"
+        "Then reduce unnecessary vertical spacing.\n\n"
+        "Do NOT fabricate information.\n\n"
+        "Do NOT remove important evidence merely to save space.\n\n"
+        "Do NOT create a second page.\n\n"
+        "============================================================\n"
+        "28. OUTPUT FORMAT\n\n"
+        "Return ONLY valid JSON according to the provided response\n"
+        "schema.\n\n"
+        "The latex property must contain ONLY the complete LaTeX\n"
+        "document.\n\n"
+        "The changes property should contain a short list describing\n"
+        "the modifications.\n\n"
+        "The preserved property should contain important information\n"
+        "that was preserved.\n\n"
+        "The ats_score property must be a number 0-100 representing the\n"
+        "ATS compatibility of the tailored resume. It MUST be >= 85.\n"
+        "Calculate it based on: JD keyword coverage, section structure,\n"
+        "action verb strength, quantifiable achievements, and formatting.\n\n"
+        "Do not place Markdown fences around the LaTeX.\n\n"
+        "============================================================\n"
+        "29. FINAL LATEX VALIDATION\n\n"
+        "Before returning the response, internally validate the\n"
+        "generated LaTeX.\n\n"
+        "Check all of the following:\n\n"
+        "Starts with \\documentclass.\n"
+        "Contains \\begin{document}.\n"
+        "Ends with \\end{document}.\n"
+        "Contains no Markdown code fences.\n"
+        "Contains no ** Markdown bold markers.\n"
+        "Contains no Markdown links.\n"
+        "Contains no [text](URL) syntax.\n"
+        "Contains no unnecessary Markdown headings.\n"
+        "Every \\href uses:\n\n"
+        "\\href{URL}{display text}\n\n"
+        "Percentage signs are escaped:\n\n"
+        "\\%\n\n"
+        "Ampersands used as normal text are escaped:\n\n"
+        "\\&\n\n"
+        "Existing custom commands remain valid.\n"
+        "Existing packages remain available.\n"
+        "Braces are balanced.\n"
+        "The document remains a complete LaTeX document.\n"
+        "The resume remains designed for one A4 page.\n\n"
+        "If any MarkDown syntax is present, remove it before returning\n"
+        "the response.\n\n"
+        "If any invalid LaTeX syntax is present, correct it before\n"
+        "returning the response.\n\n"
+        "============================================================\n"
+        "30. FINAL OUTPUT REQUIREMENT\n\n"
+        "The latex value MUST be directly saveable as:\n\n"
+        "tailored_resume.tex\n\n"
+        "and passed directly to:\n\n"
+        "pdflatex tailored_resume.tex\n\n"
+        "without requiring manual editing.\n\n"
+        "Do not return explanations inside the LaTeX.\n\n"
+        "Do not return Markdown.\n\n"
+        "Do not return code fences.\n\n"
+        "Return the complete LaTeX document only inside the JSON\n"
+        "latex property.\n\n"
+        "============================================================\n"
+        "31. LATEX SANITIZATION CONTRACT\n\n"
+        "The returned latex field is passed through a strict validator\n"
+        "and then directly to pdflatex.\n\n"
+        "The latex field MUST:\n\n"
+        "1. Be a complete LaTeX document.\n"
+        "2. Start with \\documentclass.\n"
+        "3. Contain \\begin{document}.\n"
+        "4. Contain \\end{document}.\n"
+        "5. Use ONLY LaTeX syntax.\n"
+        "6. NEVER contain Markdown.\n"
+        "7. NEVER contain Markdown links.\n"
+        "8. NEVER contain Markdown bold/italic syntax.\n"
+        "9. NEVER contain code fences.\n"
+        "10. NEVER contain explanations outside the LaTeX document.\n"
+        "11. NEVER contain ```latex or ```.\n"
+        "12. NEVER use **text**.\n"
+        "13. NEVER use [text](url).\n"
+        "14. Use \\textbf{text}, \\textit{text}, and\n"
+        "    \\href{url}{text} instead.\n"
+        "15. Preserve existing LaTeX commands whenever possible.\n"
+        "16. Do not rewrite the document into a different template.\n"
+        "17. Keep all candidate facts grounded in the MASTER RESUME.\n\n"
+        "Return the complete LaTeX document in the latex JSON property.\n"
+    )
+
+    return await call_llm_structured(prompt, GENERATE_RESUME_SCHEMA, provider, api_key, model, ollama_host)
+
+
+async def call_llm_structured(
+    prompt: str,
+    schema: Dict[str, Any],
+    provider: str,
+    api_key: Optional[str],
+    model: Optional[str],
+    ollama_host: Optional[str] = None,
+) -> Dict[str, Any]:
+    if provider == "gemini":
+        return await _call_gemini(prompt, schema, api_key, model)
+    elif provider == "openrouter":
+        return await _call_openrouter(prompt, schema, api_key, model)
+    elif provider == "nvidia":
+        return await _call_nvidia(prompt, schema, api_key, model)
+    elif provider == "ollama":
+        return await _call_ollama(prompt, schema, ollama_host, model)
+    else:
+        raise ValueError(f"Unknown provider: {provider}")
+
+
+async def _call_gemini(prompt: str, schema: Dict, api_key: str, model: Optional[str]) -> Dict:
+    model = model or settings.gemini_model
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
+    payload = {
+        "contents": [{"parts": [{"text": prompt}]}],
+        "generationConfig": {
+            "responseMimeType": "application/json",
+            "responseSchema": schema,
+            "temperature": 0.1,
+        },
+    }
+    async with httpx.AsyncClient(timeout=180) as client:
+        resp = await client.post(url, params={"key": api_key}, json=payload)
+        resp.raise_for_status()
+        data = resp.json()
+        text = data["candidates"][0]["content"]["parts"][0]["text"]
+        return json.loads(text)
+
+
+async def _call_openrouter(prompt: str, schema: Dict, api_key: str, model: Optional[str]) -> Dict:
+    model = model or "meta-llama/llama-3.3-70b-instruct"
+    async with httpx.AsyncClient(timeout=120) as client:
+        resp = await client.post(
+            "https://openrouter.ai/api/v1/chat/completions",
+            headers={"Authorization": f"Bearer {api_key}"},
+            json={
+                "model": model,
+                "response_format": {"type": "json_object"},
+                "messages": [{"role": "user", "content": prompt + "\nRespond strictly in valid JSON matching the schema."}],
+            },
+        )
+        resp.raise_for_status()
+        content = resp.json()["choices"][0]["message"]["content"]
+        return json.loads(content)
+
+
+async def _call_nvidia(prompt: str, schema: Dict, api_key: str, model: Optional[str]) -> Dict:
+    model = model or "nvidia/nemotron-3-ultra-550b-a55b"
+    async with httpx.AsyncClient(timeout=120) as client:
+        resp = await client.post(
+            "https://integrate.api.nvidia.com/v1/chat/completions",
+            headers={"Authorization": f"Bearer {api_key}"},
+            json={
+                "model": model,
+                "response_format": {"type": "json_object"},
+                "messages": [{"role": "user", "content": prompt + "\nRespond strictly in valid JSON."}],
+            },
+        )
+        resp.raise_for_status()
+        content = resp.json()["choices"][0]["message"]["content"]
+        return json.loads(content)
+
+
+async def _call_ollama(prompt: str, schema: Dict, host: Optional[str], model: Optional[str]) -> Dict:
+    host = (host or settings.ollama_host).rstrip("/")
+    model = model or settings.ollama_model
+    async with httpx.AsyncClient(timeout=180) as client:
+        resp = await client.post(
+            f"{host}/api/generate",
+            json={
+                "model": model,
+                "prompt": prompt + "\nOutput strictly valid JSON.",
+                "format": "json",
+                "stream": False,
+            },
+        )
+        resp.raise_for_status()
+        raw_json = resp.json().get("response", "{}")
+        return json.loads(raw_json)

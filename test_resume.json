@@ -1,0 +1,5 @@
+{
+  "title": "Test Resume",
+  "latex_source": "\\documentclass{article}\n\\usepackage[margin=1in]{geometry}\n\\begin{document}\n\\section*{Test Resume}\n\\textbf{Name:} John Doe\n\\textbf{Email:} john@example.com\n\\textbf{Skills:} Python, JavaScript, SQL\n\\textbf{Experience:} Software Engineer at ABC Corp (2020-2023)\n\\end{document}",
+  "is_default": true
+}

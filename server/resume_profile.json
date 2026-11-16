@@ -1,0 +1,359 @@
+{
+  "candidate_name": "HARSHITH MARIDE",
+  "headline": "AI/ML Engineer & Full-Stack Developer | GenAI, Agentic AI, Computer Vision, Banking Microservices",
+  "technical_skills": [
+    "Data Structures",
+    "Operating Systems",
+    "Computer Networks",
+    "Database Management Systems",
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "JDBC",
+    "REST APIs",
+    "Prompt Engineering",
+    "Machine Learning",
+    "ensemble learning",
+    "Deep Learning",
+    "image-classification",
+    "transfer learning",
+    "NLU",
+    "GenAI",
+    "Generative AI",
+    "LLM",
+    "RAG",
+    "Agentic AI",
+    "Hugging Face Transformers",
+    "BLIP-2",
+    "VGG19",
+    "CNN",
+    "Google Ads API",
+    "Gemini LLM",
+    "Dialogflow",
+    "FastAPI",
+    "Spring Boot",
+    "React",
+    "Angular",
+    "Streamlit",
+    "Gradio",
+    "Scikit-learn",
+    "TensorFlow",
+    "Keras",
+    "PyTorch",
+    "Pandas",
+    "NumPy",
+    "OpenCV",
+    "Power BI",
+    "Databricks",
+    "PySpark",
+    "SQL",
+    "MongoDB",
+    "MySQL",
+    "Oracle SQL",
+    "PostgreSQL",
+    "Git",
+    "CI/CD",
+    "Postman",
+    "Docker",
+    "AWS",
+    "Azure",
+    "GCP",
+    "Apache Spark",
+    "ETL Pipelines",
+    "API Testing",
+    "Unit Testing"
+  ],
+  "languages": [
+    "Python",
+    "C++",
+    "Java",
+    "MATLAB",
+    "SQL",
+    "Excel VBA",
+    "Unix Shell Scripting",
+    "JavaScript",
+    "TypeScript",
+    "PL/SQL"
+  ],
+  "frameworks": [
+    "Streamlit",
+    "React.js",
+    "Angular",
+    "Spring Boot",
+    "Spring MVC",
+    "Flask",
+    "FastAPI",
+    "NumPy",
+    "Pandas",
+    "Scikit-learn",
+    "TensorFlow",
+    "Keras",
+    "Matplotlib",
+    "Seaborn",
+    "Hugging Face Transformers",
+    "BLIP-2",
+    "Gradio",
+    "Dialogflow",
+    "VGG19",
+    "Google Ads API",
+    "Gemini LLM",
+    "PyTorch",
+    "OpenCV",
+    "FEE Web",
+    "Spring JDBC"
+  ],
+  "databases": [
+    "MongoDB",
+    "MySQL",
+    "Oracle",
+    "PostgreSQL",
+    "Derby"
+  ],
+  "tools": [
+    "Arduino IDE",
+    "Power BI",
+    "Databricks",
+    "Git",
+    "Postman",
+    "Cisco Packet Tracer",
+    "Jupyter Notebook",
+    "VS Code",
+    "IntelliJ IDEA",
+    "Unix/Linux",
+    "CI/CD Pipelines"
+  ],
+  "experience": [
+    {
+      "company": "TCS",
+      "role": "Assistant System Engineer (ASE)",
+      "dates": "Nov 2025 -- Present",
+      "evidence": [
+        "Working as an Assistant System Engineer at Tata Consultancy Services (TCS), developing enterprise banking microservices and portal modules using Java, Spring Boot, and Angular for the TCS BaNCS suite (CTBC Bank).",
+        "Architected and delivered a client-accepted Proof of Concept (PoC) for Zions Bank; tuned complex Oracle SQL / PL/SQL queries, stored procedures, and data access layers to accelerate query execution by 25%.",
+        "Executed end-to-end backend API integration, data validation pipelines, and frontend verification using Postman, AWS, and Unix shell scripting; automated testing and deployment workflows following CI/CD practices.",
+        "Built modular frontend components using FEE Web (Angular-based enterprise framework) with strict form validation, reactive patterns, and real-time REST API integrations for core banking workflows.",
+        "Collaborated in Agile Scrum teams to deliver sprint commitments; conducted code reviews, maintained documentation, and ensured compliance with enterprise security and coding standards."
+      ]
+    },
+    {
+      "company": "VCodez",
+      "role": "Data Science Intern",
+      "dates": "Jan 2025 -- May 2025",
+      "evidence": [
+        "Developed a multimodal vision-language application using BLIP-2, Python, Hugging Face Transformers, Streamlit, and Gradio to generate natural-language descriptions from images.",
+        "Conducted extensive data preprocessing, exploratory data analysis, and predictive modeling using Scikit-learn, Pandas, and ensemble learning techniques on Kaggle and benchmark datasets; evaluated models with AUC-ROC, precision, and recall metrics.",
+        "Implemented memory optimization techniques including model quantization and batch inference for efficient deployment of transformer-based models on resource-constrained environments.",
+        "Built end-to-end ML pipelines with automated data validation, feature engineering, model training, and evaluation; documented experiments and results for stakeholder review."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "SEM Campaign Planning & Keyword Intelligence Platform",
+      "dates": "Jun 2025 -- Sep 2025",
+      "technologies": [
+        "React",
+        "FastAPI",
+        "Google Gemini API",
+        "Google Ads API",
+        "Prompt Engineering",
+        "Python",
+        "JavaScript"
+      ],
+      "evidence": [
+        "Architected and deployed an end-to-end SEM intelligence web application using React (frontend) and FastAPI (backend) to automate keyword research and marketing campaign architecture using Google Gemini API and structured prompt chaining.",
+        "Engineered programmatic algorithms for keyword deduplication, automated Cost-Per-Click (CPC) analysis, and Shopping CPC bid recommendations, accelerating campaign setup time by 60%; connected Google Ads API for real-time keyword metrics, search volume, and competitor bid data.",
+        "Integrated Google Gemini LLM using structured prompt chaining to cluster multi-thousand search queries into cohesive ad groups (Brand, Competitor, Category, Informational, and Location-based) with high precision.",
+        "Built asynchronous backend endpoints with FastAPI for scalable API processing; implemented RESTful API design with proper error handling, logging, and monitoring for production readiness.",
+        "Designed responsive React frontend with modular components, real-time data visualization, and interactive campaign management dashboard for marketing team collaboration."
+      ]
+    },
+    {
+      "name": "MediBot -- Autonomous Medical Receptionist & Agentic Triage Assistant",
+      "dates": "Dec 2024 -- Apr 2025",
+      "technologies": [
+        "Dialogflow",
+        "NLU",
+        "Flask",
+        "Streamlit",
+        "Postman",
+        "MongoDB",
+        "Python"
+      ],
+      "evidence": [
+        "Developed an agentic conversational assistant using Dialogflow NLU and LLM workflows with custom Flask webhook endpoints to automate hospital triage, patient appointment scheduling, and FAQ resolution with 95%+ triage accuracy.",
+        "Implemented conversation state persistence using MongoDB to record patient chat history, appointment booking states, emergency request logs, and doctor rosters with full audit trail.",
+        "Integrated Dialogflow NLU with custom Flask webhook endpoints to execute dynamic business logic, schedule lookups, and automate triage decision flows; validated all REST API payloads and webhook edge cases with Postman.",
+        "Engineered an interactive UI using Streamlit for real-time monitoring and administration; built comprehensive test suites covering conversation flows, error handling, and integration scenarios.",
+        "Designed escalation protocols for emergency queries with automated routing to medical staff; implemented fallback mechanisms and confidence thresholding for safe AI-assisted triage."
+      ]
+    },
+    {
+      "name": "Multimodal Image Captioning System (BLIP-2 & Transformers)",
+      "dates": "Jan 2025 -- May 2025",
+      "technologies": [
+        "BLIP-2",
+        "Hugging Face Transformers",
+        "PyTorch",
+        "Streamlit",
+        "Gradio",
+        "Python"
+      ],
+      "evidence": [
+        "Implemented a multimodal vision-language system integrating Salesforce BLIP-2 with Hugging Face Transformers and PyTorch to generate context-aware natural language descriptions for arbitrary image inputs with memory optimization via quantization.",
+        "Leveraged Hugging Face Transformers and PyTorch for model inference, memory optimization (quantization), and batch image evaluation; reduced inference latency by 40% through 8-bit quantization and optimized batching.",
+        "Constructed interactive evaluation interfaces in Streamlit and Gradio, enabling users to upload images and adjust generation temperature, beam search parameters, and max token length for fine-grained control.",
+        "Enhanced digital accessibility by demonstrating automated alternative text generation for visually impaired accessibility compliance; validated output quality using BLEU, METEOR, and CIDEr metrics against human captions.",
+        "Designed modular pipeline architecture supporting multiple vision encoders and language models for extensibility; documented API usage and deployment considerations for production environments."
+      ]
+    },
+    {
+      "name": "Predictive Workforce Analytics & Employee Attrition Model",
+      "dates": "Sep 2023 -- Nov 2023",
+      "technologies": [
+        "Python",
+        "Scikit-learn",
+        "Databricks",
+        "SQL",
+        "Decision Tree Classifier",
+        "Power BI",
+        "Pandas",
+        "PySpark"
+      ],
+      "evidence": [
+        "Built an ML classification engine using Scikit-learn (Decision Tree Classifier) on 1,470 employee records to predict employee attrition risk with 82% accuracy; engineered feature pipelines extracting turnover predictors such as overtime, job satisfaction, and salary stagnation.",
+        "Executed feature engineering and data processing pipelines inside Databricks utilizing SQL and Pandas for scalable ETL; implemented automated data validation, missing value imputation, and categorical encoding workflows.",
+        "Designed interactive Power BI executive dashboards visualizing key workforce metrics, turnover velocity, and retention trends to support strategic HR decision-making and preventive retention interventions.",
+        "Delivered actionable business insights enabling preventive retention interventions and quantifying potential cost savings for talent operations; presented findings to stakeholders with clear ROI projections.",
+        "Performed model comparison across multiple algorithms (Random Forest, XGBoost, Logistic Regression) with cross-validation; selected Decision Tree for interpretability and business alignment with HR domain requirements."
+      ]
+    },
+    {
+      "name": "Deep Learning Classifier for Ocular Disease Detection",
+      "dates": "Sep 2023 -- Nov 2023",
+      "technologies": [
+        "Python",
+        "PyTorch",
+        "TensorFlow",
+        "VGG19",
+        "Transfer Learning",
+        "OpenCV",
+        "Matplotlib"
+      ],
+      "evidence": [
+        "Developed a transfer learning computer vision model based on VGG19 to classify retinal images into 4 categories: Normal, Cataract, Diabetic Retinopathy, and Glaucoma, achieving 90% accuracy on test datasets.",
+        "Implemented extensive image preprocessing pipelines using OpenCV, including resizing, normalization, contrast enhancement (CLAHE), and data augmentation (rotation, flip, zoom) to prevent overfitting and improve generalization.",
+        "Evaluated model performance using confusion matrices, precision, recall, F1-score, and AUC-ROC curves; achieved 90% classification accuracy with balanced performance across all 4 disease classes.",
+        "Applied transfer learning with pre-trained ImageNet weights; fine-tuned final dense layers while freezing early convolutional blocks for efficient training on limited medical imaging data.",
+        "Built reproducible training pipeline with experiment tracking, hyperparameter logging, and model checkpointing; documented clinical relevance and limitations for medical AI deployment considerations."
+      ]
+    },
+    {
+      "name": "Enterprise Hotel Management & Reservation Portal",
+      "dates": "Sep 2023 -- Nov 2023",
+      "technologies": [
+        "Java",
+        "Spring Boot",
+        "Spring MVC",
+        "Angular",
+        "Spring JDBC",
+        "MySQL",
+        "RESTful APIs"
+      ],
+      "evidence": [
+        "Engineered a full-stack hotel management portal using Java, Spring Boot, and Angular to manage room availability, guest check-in/out, and real-time billing via clean layered RESTful API architecture.",
+        "Designed clean layered architecture with RESTful API endpoints connecting client-side dynamic forms to persistent relational database transactions; implemented service, repository, and controller layers following Spring best practices.",
+        "Optimized database queries using Spring JDBC and MySQL with parameterized statements, indexed schema, and ACID-compliant transactional boundaries; reduced query latency by 30% through query optimization.",
+        "Built responsive Angular frontend modules with modular components, reactive form validation, route guards, and error-handling interceptors; implemented role-based access control for admin, staff, and guest portals.",
+        "Integrated comprehensive booking workflow: room search, availability checking, reservation creation, check-in/check-out processing, billing generation, and payment tracking with audit logging."
+      ]
+    },
+    {
+      "name": "Banking Microservices & PoC Architecture (TCS BaNCS & Zions Bank)",
+      "dates": "Nov 2025 -- Present",
+      "technologies": [
+        "Java",
+        "Spring Boot",
+        "Microservices",
+        "Oracle SQL",
+        "Angular",
+        "FEE Web",
+        "RESTful APIs"
+      ],
+      "evidence": [
+        "Engineered core banking microservices for TCS BaNCS using Java and Spring Boot, implementing robust RESTful APIs and domain-driven design patterns for account management, transaction processing, and customer onboarding.",
+        "Spearheaded technical feasibility and architecture for a high-priority Zions Bank PoC, designing key solution architectures and presenting technical deliverables directly to stakeholders; secured client acceptance for the PoC.",
+        "Optimized Oracle SQL database performance, tuning complex queries, stored procedures, and data access layers to reduce query execution latency by 25%; implemented indexing strategies and query plan analysis.",
+        "Constructed modular frontend components using FEE Web (Angular-based enterprise framework) with strict form validation, real-time API integrations, and responsive design for banking operations.",
+        "Implemented CI/CD pipelines for automated build, test, and deployment; ensured compliance with banking security standards, audit requirements, and regulatory frameworks for financial services."
+      ]
+    },
+    {
+      "name": "Fashion-MNIST Multi-Class Classifier using Convolutional Neural Networks (CNN)",
+      "dates": "Sep 2023 -- Nov 2023",
+      "technologies": [
+        "Python",
+        "TensorFlow",
+        "Keras",
+        "CNN",
+        "NumPy",
+        "Matplotlib"
+      ],
+      "evidence": [
+        "Designed and trained a deep Convolutional Neural Network (CNN) architecture to classify fashion apparel images into 10 discrete categories on the Fashion-MNIST dataset, attaining 92% accuracy through systematic learning rate scheduling and hyperparameter tuning.",
+        "Architected convolutional layers, max-pooling, batch normalization, and dropout layers to optimize gradient flow and regularize against overfitting; experimented with varying kernel sizes, filter counts, and depth configurations.",
+        "Implemented systematic learning rate scheduling (step decay, cosine annealing) and hyperparameter tuning using validation curves; compared optimizer performance (Adam, SGD with momentum, RMSprop) for convergence optimization.",
+        "Evaluated model performance using confusion matrices, per-class precision/recall, and top-k accuracy metrics; achieved 92% test accuracy with balanced performance across all 10 fashion categories.",
+        "Built reproducible training pipeline with TensorFlow/Keras including data augmentation, early stopping, model checkpointing, and TensorBoard visualization for experiment tracking and debugging."
+      ]
+    },
+    {
+      "name": "Enterprise Network Topology & IoT Automation Simulation",
+      "dates": "Sep 2023 -- Nov 2023",
+      "technologies": [
+        "Cisco Packet Tracer",
+        "IoT Protocols",
+        "Network Architecture",
+        "TCP/IP",
+        "Python Scripting",
+        "VLANs",
+        "OSPF",
+        "EIGRP"
+      ],
+      "evidence": [
+        "Architected simulated enterprise network topologies implementing subnets, VLANs, routing protocols (OSPF, EIGRP), and firewall access control lists (ACLs) using Cisco Packet Tracer for multi-site enterprise scenarios.",
+        "Configured IoT sensor automation workflows within simulated smart environments, demonstrating automated device telemetry, packet routing, and threshold-based alerting for environmental monitoring use cases.",
+        "Validated end-to-end network performance, packet latency, and security policies under varying traffic loads; implemented QoS policies for voice/video traffic prioritization and bandwidth management.",
+        "Designed network segmentation strategies with DMZ, internal zones, and management networks; configured NAT, VPN, and secure remote access for distributed workforce scenarios.",
+        "Documented network architecture diagrams, device configurations, and troubleshooting procedures; created automated configuration backup and change management workflows using Python scripting."
+      ]
+    }
+  ],
+  "education": [
+    {
+      "program": "B.Tech CSE -- AI & Robotics",
+      "institute": "Vellore Institute of Technology, Chennai",
+      "cgpa": "8.92",
+      "year": "2025"
+    },
+    {
+      "program": "XII",
+      "institute": "Narayana Junior College, Hyderabad",
+      "cgpa": "93.1",
+      "year": "2020"
+    },
+    {
+      "program": "X",
+      "institute": "Narayana School, Tirupati",
+      "cgpa": "10",
+      "year": "2018"
+    }
+  ],
+  "certifications": [
+    "Google Cloud Digital Leader Certification",
+    "Smart Bridge -- Applied Data Science Certification",
+    "Microsoft Certified: Azure AI Fundamentals",
+    "Enterprise Automation Certification (Workato)",
+    "Exploring IoT and Networking with Cisco Packet Tracer"
+  ]
+}
