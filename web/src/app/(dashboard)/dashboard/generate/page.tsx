@@ -29,7 +29,7 @@ const generateSchema = z.object({
   master_resume_id: z.string().min(1, 'Select a master resume'),
   job_description_id: z.string().min(1, 'Select a job description'),
   target_role: z.string().optional(),
-  llm_provider: z.enum(['gemini', 'openrouter', 'nvidia', 'ollama']).optional(),
+  llm_provider: z.enum(['gemini', 'openai', 'anthropic', 'grok', 'openrouter', 'nvidia', 'ollama']).optional(),
   llm_model: z.string().optional(),
 });
 
@@ -352,6 +352,9 @@ export default function GeneratePage() {
                   <select {...register('llm_provider')} className="input">
                     <option value="">Auto (use your API keys)</option>
                     <option value="gemini">Google Gemini</option>
+                    <option value="openai">OpenAI</option>
+                    <option value="anthropic">Anthropic Claude</option>
+                    <option value="grok">Grok (xAI)</option>
                     <option value="openrouter">OpenRouter</option>
                     <option value="nvidia">NVIDIA NIM</option>
                     <option value="ollama">Ollama (Local)</option>

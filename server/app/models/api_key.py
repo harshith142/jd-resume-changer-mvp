@@ -1,5 +1,5 @@
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 from sqlalchemy import String, DateTime, Boolean, Enum as SQLEnum, ForeignKey, Index, LargeBinary
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from typing import Optional
@@ -10,14 +10,17 @@ import enum
 
 
 class LLMProvider(str, enum.Enum):
-    GEMINI = "gemini"
-    OPENROUTER = "openrouter"
-    NVIDIA = "nvidia"
-    OLLAMA = "ollama"
+    GEMINI = 'gemini'
+    OPENAI = 'openai'
+    ANTHROPIC = 'anthropic'
+    GROK = 'grok'
+    OPENROUTER = 'openrouter'
+    NVIDIA = 'nvidia'
+    OLLAMA = 'ollama'
 
 
 class APIKey(Base):
-    __tablename__ = "api_keys"
+    __tablename__ = 'api_keys'
 
     id: Mapped[uuid.UUID] = mapped_column(
         GUID(),
@@ -26,7 +29,7 @@ class APIKey(Base):
     )
     user_id: Mapped[uuid.UUID] = mapped_column(
         GUID(),
-        ForeignKey("users.id", ondelete="CASCADE"),
+        ForeignKey('users.id', ondelete='CASCADE'),
         index=True,
         nullable=False,
     )
@@ -48,22 +51,22 @@ class APIKey(Base):
     is_valid: Mapped[Optional[bool]] = mapped_column(Boolean, nullable=True)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
-        default=datetime.utcnow,
+        default=lambda: datetime.now(timezone.utc),
         nullable=False,
     )
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
-        default=datetime.utcnow,
-        onupdate=datetime.utcnow,
+        default=lambda: datetime.now(timezone.utc),
+        onupdate=lambda: datetime.now(timezone.utc),
         nullable=False,
     )
 
     # Relationship
-    user: Mapped["User"] = relationship("User", back_populates="api_keys", lazy="selectin")
+    user: Mapped['User'] = relationship('User', back_populates='api_keys', lazy='selectin')
 
     __table_args__ = (
-        Index("ix_api_keys_user_provider", "user_id", "provider", unique=True),
+        Index('ix_api_keys_user_provider', 'user_id', 'provider', unique=True),
     )
 
     def __repr__(self) -> str:
-        return f"<APIKey(id={self.id}, user_id={self.user_id}, provider={self.provider}, session_only={self.is_session_only})>"
+        return f'<APIKey(id={self.id}, user_id={self.user_id}, provider={self.provider}, session_only={self.is_session_only})>'

@@ -55,9 +55,10 @@ async def get_llm_config(
     request: Optional[Request] = None,
     user: Optional[User] = None,
     db: Optional[AsyncSession] = None,
+    preferred_provider: Optional[str] = None,
 ) -> dict:
     """Get LLM configuration for the current request.
-    Priority: Request headers > User's stored keys > Server defaults.
+    Priority: Request headers > User's stored keys (matching preferred_provider if specified) > Server defaults.
     Accepts both the modern keyworded style and older positional calls.
     """
     if isinstance(request, User):
@@ -91,20 +92,51 @@ async def get_llm_config(
             config["ollama_host"] = x_llm_ollama_host
             return config
 
+        # Also check request body for preferred provider (passed via query or stored in request state)
+        if preferred_provider is None and hasattr(request, 'state'):
+            preferred_provider = getattr(request.state, 'llm_provider', None)
+
     if user is None or db is None:
         # No authenticated user: fall back to server defaults
         return _default_llm_config(config)
 
+    # Query for user's stored keys (both session and non-session)
     result = await db.execute(
-        select(APIKey).where(
-            APIKey.user_id == user.id,
-            APIKey.is_session_only == False,
-        )
+        select(APIKey).where(APIKey.user_id == user.id)
     )
     stored_keys = result.scalars().all()
 
+    # If user has a preferred provider, try to find that specific key first
+    if preferred_provider:
+        for key in stored_keys:
+            if key.provider.value == preferred_provider:
+                # For non-session keys, decrypt the API key
+                if not key.is_session_only and key.key_encrypted and key.key_nonce:
+                    try:
+                        decrypted = decrypt_api_key(
+                            key.key_encrypted,
+                            key.key_nonce,
+                            user.id,
+                            settings.app_secret,
+                        )
+                        config["provider"] = key.provider.value
+                        config["api_key"] = decrypted
+                        config["model"] = key.model
+                        config["ollama_host"] = key.ollama_host
+                        return config
+                    except Exception:
+                        continue
+                # For session-only keys (like Ollama), use the stored config directly
+                elif key.is_session_only:
+                    config["provider"] = key.provider.value
+                    config["api_key"] = None  # No API key for Ollama
+                    config["model"] = key.model
+                    config["ollama_host"] = key.ollama_host
+                    return config
+
+    # Otherwise, return the first available non-session key with encrypted key
     for key in stored_keys:
-        if key.key_encrypted and key.key_nonce:
+        if not key.is_session_only and key.key_encrypted and key.key_nonce:
             try:
                 decrypted = decrypt_api_key(
                     key.key_encrypted,
@@ -119,6 +151,15 @@ async def get_llm_config(
                 return config
             except Exception:
                 continue
+
+    # If no non-session keys, check for session-only keys (e.g., Ollama)
+    for key in stored_keys:
+        if key.is_session_only:
+            config["provider"] = key.provider.value
+            config["api_key"] = None
+            config["model"] = key.model
+            config["ollama_host"] = key.ollama_host
+            return config
 
     return _default_llm_config(config)
 

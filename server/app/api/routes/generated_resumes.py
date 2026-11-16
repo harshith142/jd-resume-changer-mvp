@@ -134,7 +134,8 @@ async def generate_resume(
             "ollama_host": request.llm_ollama_host,
         }
     else:
-        llm_config = await get_llm_config(http_request, current_user, db)
+        # Pass user's selected provider so we use their stored key for that provider
+        llm_config = await get_llm_config(http_request, current_user, db, preferred_provider=request.llm_provider)
 
     if not llm_config["api_key"] and llm_config["provider"] != "ollama":
         raise HTTPException(

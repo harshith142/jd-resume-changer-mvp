@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, Request, Response, status
+﻿from fastapi import APIRouter, Depends, HTTPException, Request, Response, status
 from fastapi.responses import RedirectResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
@@ -6,7 +6,7 @@ from pydantic import BaseModel
 import secrets
 import uuid
 import json
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from threading import Lock
 
@@ -53,7 +53,7 @@ oauth_states: dict[str, dict] = {}
 
 def _prune_oauth_states() -> None:
     """Remove expired OAuth states and keep the in-memory store lean."""
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc)
     expired = []
     for state, payload in list(oauth_states.items()):
         try:
@@ -98,7 +98,7 @@ def save_oauth_state(state: str, provider: str, redirect_uri: str) -> None:
         oauth_states[state] = {
             "provider": provider,
             "redirect_uri": redirect_uri,
-            "created_at": datetime.utcnow().isoformat(),
+            "created_at": datetime.now(timezone.utc).isoformat(),
         }
         _prune_oauth_states()
         _persist_oauth_states()
@@ -342,3 +342,4 @@ async def get_current_user_info(
 
 # Add refresh_token_hash column to User model (need to update model)
 # This will be done via migration
+

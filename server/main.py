@@ -9,10 +9,6 @@ import tempfile
 from pathlib import Path
 from typing import List
 
-from dotenv import load_dotenv
-load_dotenv(Path(__file__).parent / ".env")
-load_dotenv()
-
 import httpx
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -20,9 +16,17 @@ from pydantic import BaseModel, Field
 
 app = FastAPI(title="JD Resume Changer Local Compiler")
 
+# Restrict CORS to localhost origins only
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "http://localhost:8000",
+        "http://127.0.0.1:8000",
+        "http://localhost:8765",
+        "http://127.0.0.1:8765",
+    ],
     allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],

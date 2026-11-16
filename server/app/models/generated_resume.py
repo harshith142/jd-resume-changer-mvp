@@ -1,5 +1,5 @@
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 from sqlalchemy import String, DateTime, ForeignKey, Text, Float, Integer, Index, LargeBinary, Enum as SQLEnum
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -11,14 +11,14 @@ from app.models.user import GUID
 
 
 class GenerationStatus(str, enum.Enum):
-    pending = "pending"
-    processing = "processing"
-    completed = "completed"
-    failed = "failed"
+    pending = 'pending'
+    processing = 'processing'
+    completed = 'completed'
+    failed = 'failed'
 
 
 class GeneratedResume(Base):
-    __tablename__ = "generated_resumes"
+    __tablename__ = 'generated_resumes'
 
     id: Mapped[uuid.UUID] = mapped_column(
         GUID(),
@@ -27,19 +27,19 @@ class GeneratedResume(Base):
     )
     user_id: Mapped[uuid.UUID] = mapped_column(
         GUID(),
-        ForeignKey("users.id", ondelete="CASCADE"),
+        ForeignKey('users.id', ondelete='CASCADE'),
         index=True,
         nullable=False,
     )
     master_resume_id: Mapped[uuid.UUID] = mapped_column(
         GUID(),
-        ForeignKey("master_resumes.id", ondelete="CASCADE"),
+        ForeignKey('master_resumes.id', ondelete='CASCADE'),
         index=True,
         nullable=False,
     )
     job_description_id: Mapped[uuid.UUID] = mapped_column(
         GUID(),
-        ForeignKey("job_descriptions.id", ondelete="CASCADE"),
+        ForeignKey('job_descriptions.id', ondelete='CASCADE'),
         index=True,
         nullable=False,
     )
@@ -63,24 +63,24 @@ class GeneratedResume(Base):
     generation_time_ms: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
-        default=datetime.utcnow,
+        default=lambda: datetime.now(timezone.utc),
         nullable=False,
     )
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
-        default=datetime.utcnow,
-        onupdate=datetime.utcnow,
+        default=lambda: datetime.now(timezone.utc),
+        onupdate=lambda: datetime.now(timezone.utc),
         nullable=False,
     )
 
     # Relationships
-    user: Mapped["User"] = relationship("User", back_populates="generated_resumes", lazy="selectin")
-    master_resume: Mapped["MasterResume"] = relationship("MasterResume", back_populates="generated_resumes", lazy="selectin")
-    job_description: Mapped["JobDescription"] = relationship("JobDescription", back_populates="generated_resumes", lazy="selectin")
+    user: Mapped['User'] = relationship('User', back_populates='generated_resumes', lazy='selectin')
+    master_resume: Mapped['MasterResume'] = relationship('MasterResume', back_populates='generated_resumes', lazy='selectin')
+    job_description: Mapped['JobDescription'] = relationship('JobDescription', back_populates='generated_resumes', lazy='selectin')
 
     __table_args__ = (
-        Index("ix_generated_resumes_user_created", "user_id", "created_at"),
+        Index('ix_generated_resumes_user_created', 'user_id', 'created_at'),
     )
 
     def __repr__(self) -> str:
-        return f"<GeneratedResume(id={self.id}, user_id={self.user_id}, ats_score={self.ats_score}, pages={self.page_count}, status={self.status})>"
+        return f'<GeneratedResume(id={self.id}, user_id={self.user_id}, ats_score={self.ats_score}, pages={self.page_count}, status={self.status})>'

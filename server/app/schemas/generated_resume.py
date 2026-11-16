@@ -59,7 +59,7 @@ class GenerateResumeRequest(BaseModel):
     job_description_id: uuid.UUID
     target_role: Optional[str] = Field(None, max_length=200)
     # Optional: override API key for this request (session-only mode)
-    llm_provider: Optional[str] = Field(None, pattern="^(gemini|openrouter|nvidia|ollama)$")
+    llm_provider: Optional[str] = Field(None, pattern="^(gemini|openai|anthropic|grok|openrouter|nvidia|ollama)$")
     llm_api_key: Optional[str] = None
     llm_model: Optional[str] = None
     llm_ollama_host: Optional[str] = None

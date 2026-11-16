@@ -1,5 +1,5 @@
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 from sqlalchemy import String, DateTime, Boolean, Enum as SQLEnum, UniqueConstraint, Index, LargeBinary, func, TypeDecorator, CHAR
 from sqlalchemy.dialects.postgresql import UUID as PGUUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -10,15 +10,15 @@ import enum
 
 
 class OAuthProvider(str, enum.Enum):
-    GOOGLE = "google"
-    GITHUB = "github"
+    GOOGLE = 'google'
+    GITHUB = 'github'
 
 
 # Cross-platform UUID type that works with both PostgreSQL and SQLite
 class GUID(TypeDecorator):
-    """Platform-independent GUID type.
+    '''Platform-independent GUID type.
     Uses PostgreSQL's UUID type, otherwise uses CHAR(36) storing as string.
-    """
+    '''
     impl = CHAR
     cache_ok = True
 
@@ -50,7 +50,7 @@ class GUID(TypeDecorator):
 
 
 class User(Base):
-    __tablename__ = "users"
+    __tablename__ = 'users'
 
     id: Mapped[uuid.UUID] = mapped_column(
         GUID(),
@@ -68,13 +68,13 @@ class User(Base):
     oauth_subject: Mapped[Optional[str]] = mapped_column(String(255), unique=True, index=True, nullable=True)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
-        default=datetime.utcnow,
+        default=lambda: datetime.now(timezone.utc),
         nullable=False,
     )
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
-        default=datetime.utcnow,
-        onupdate=datetime.utcnow,
+        default=lambda: datetime.now(timezone.utc),
+        onupdate=lambda: datetime.now(timezone.utc),
         nullable=False,
     )
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
@@ -82,34 +82,34 @@ class User(Base):
     refresh_token_hash: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
 
     # Relationships
-    api_keys: Mapped[list["APIKey"]] = relationship(
-        "APIKey",
-        back_populates="user",
-        cascade="all, delete-orphan",
-        lazy="selectin",
+    api_keys: Mapped[list['APIKey']] = relationship(
+        'APIKey',
+        back_populates='user',
+        cascade='all, delete-orphan',
+        lazy='selectin',
     )
-    master_resumes: Mapped[list["MasterResume"]] = relationship(
-        "MasterResume",
-        back_populates="user",
-        cascade="all, delete-orphan",
-        lazy="selectin",
+    master_resumes: Mapped[list['MasterResume']] = relationship(
+        'MasterResume',
+        back_populates='user',
+        cascade='all, delete-orphan',
+        lazy='selectin',
     )
-    job_descriptions: Mapped[list["JobDescription"]] = relationship(
-        "JobDescription",
-        back_populates="user",
-        cascade="all, delete-orphan",
-        lazy="selectin",
+    job_descriptions: Mapped[list['JobDescription']] = relationship(
+        'JobDescription',
+        back_populates='user',
+        cascade='all, delete-orphan',
+        lazy='selectin',
     )
-    generated_resumes: Mapped[list["GeneratedResume"]] = relationship(
-        "GeneratedResume",
-        back_populates="user",
-        cascade="all, delete-orphan",
-        lazy="selectin",
+    generated_resumes: Mapped[list['GeneratedResume']] = relationship(
+        'GeneratedResume',
+        back_populates='user',
+        cascade='all, delete-orphan',
+        lazy='selectin',
     )
 
     __table_args__ = (
-        Index("ix_users_oauth_provider_subject", "oauth_provider", "oauth_subject"),
+        Index('ix_users_oauth_provider_subject', 'oauth_provider', 'oauth_subject'),
     )
 
     def __repr__(self) -> str:
-        return f"<User(id={self.id}, email={self.email}, provider={self.oauth_provider})>"
+        return f'<User(id={self.id}, email={self.email}, provider={self.oauth_provider})>'

@@ -103,9 +103,11 @@ export interface User {
   updated_at: string;
 }
 
+export type LLMProvider = 'gemini' | 'openai' | 'anthropic' | 'grok' | 'openrouter' | 'nvidia' | 'ollama';
+
 export interface APIKey {
   id: string;
-  provider: 'gemini' | 'openrouter' | 'nvidia' | 'ollama';
+  provider: LLMProvider;
   model?: string | null;
   ollama_host?: string | null;
   is_session_only: boolean;
@@ -118,7 +120,7 @@ export interface APIKey {
 }
 
 export interface APIKeyCreate {
-  provider: 'gemini' | 'openrouter' | 'nvidia' | 'ollama';
+  provider: LLMProvider;
   api_key: string;
   model?: string;
   ollama_host?: string;
@@ -334,7 +336,7 @@ export interface GenerateResumeRequest {
   master_resume_id: string;
   job_description_id: string;
   target_role?: string;
-  llm_provider?: 'gemini' | 'openrouter' | 'nvidia' | 'ollama';
+  llm_provider?: LLMProvider;
   llm_model?: string;
   llm_api_key?: string;
   llm_ollama_host?: string;

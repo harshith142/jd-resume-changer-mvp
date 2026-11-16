@@ -1,7 +1,23 @@
 {
+  "/_not-found/page": "app/_not-found/page.js",
+  "/(auth)/callback/page": "app/(auth)/callback/page.js",
+  "/(auth)/login/page": "app/(auth)/login/page.js",
   "/page": "app/page.js",
   "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
-  "/(auth)/login/page": "app/(auth)/login/page.js",
+  "/test-route/page": "app/test-route/page.js",
+  "/terms/page": "app/terms/page.js",
+  "/privacy/page": "app/privacy/page.js",
+  "/(dashboard)/dashboard/generate/page": "app/(dashboard)/dashboard/generate/page.js",
+  "/(dashboard)/dashboard/history/page": "app/(dashboard)/dashboard/history/page.js",
+  "/(dashboard)/dashboard/page": "app/(dashboard)/dashboard/page.js",
+  "/(dashboard)/dashboard/history/[id]/page": "app/(dashboard)/dashboard/history/[id]/page.js",
+  "/(dashboard)/dashboard/job-descriptions/[id]/edit/page": "app/(dashboard)/dashboard/job-descriptions/[id]/edit/page.js",
+  "/(dashboard)/dashboard/job-descriptions/page": "app/(dashboard)/dashboard/job-descriptions/page.js",
+  "/(dashboard)/dashboard/resumes/page": "app/(dashboard)/dashboard/resumes/page.js",
   "/(dashboard)/dashboard/settings/page": "app/(dashboard)/dashboard/settings/page.js",
-  "/(dashboard)/dashboard/page": "app/(dashboard)/dashboard/page.js"
+  "/(dashboard)/dashboard/resumes/new/page": "app/(dashboard)/dashboard/resumes/new/page.js",
+  "/(dashboard)/dashboard/resumes/[id]/page": "app/(dashboard)/dashboard/resumes/[id]/page.js",
+  "/(dashboard)/dashboard/resumes/[id]/edit/page": "app/(dashboard)/dashboard/resumes/[id]/edit/page.js",
+  "/(dashboard)/dashboard/job-descriptions/new/page": "app/(dashboard)/dashboard/job-descriptions/new/page.js",
+  "/(dashboard)/dashboard/job-descriptions/[id]/page": "app/(dashboard)/dashboard/job-descriptions/[id]/page.js"
 }

@@ -1,5 +1,5 @@
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 from sqlalchemy import String, DateTime, ForeignKey, Text, Enum as SQLEnum, Index
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -15,12 +15,12 @@ import enum
 
 
 class JDSource(str, enum.Enum):
-    PASTE = "paste"
-    UPLOAD = "upload"
+    PASTE = 'paste'
+    UPLOAD = 'upload'
 
 
 class JobDescription(Base):
-    __tablename__ = "job_descriptions"
+    __tablename__ = 'job_descriptions'
 
     id: Mapped[uuid.UUID] = mapped_column(
         GUID(),
@@ -29,7 +29,7 @@ class JobDescription(Base):
     )
     user_id: Mapped[uuid.UUID] = mapped_column(
         GUID(),
-        ForeignKey("users.id", ondelete="CASCADE"),
+        ForeignKey('users.id', ondelete='CASCADE'),
         index=True,
         nullable=False,
     )
@@ -44,22 +44,22 @@ class JobDescription(Base):
     filename: Mapped[Optional[str]] = mapped_column(String(500), nullable=True)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
-        default=datetime.utcnow,
+        default=lambda: datetime.now(timezone.utc),
         nullable=False,
     )
 
     # Relationships
-    user: Mapped["User"] = relationship("User", back_populates="job_descriptions", lazy="selectin")
-    generated_resumes: Mapped[list["GeneratedResume"]] = relationship(
-        "GeneratedResume",
-        back_populates="job_description",
-        cascade="all, delete-orphan",
-        lazy="selectin",
+    user: Mapped['User'] = relationship('User', back_populates='job_descriptions', lazy='selectin')
+    generated_resumes: Mapped[list['GeneratedResume']] = relationship(
+        'GeneratedResume',
+        back_populates='job_description',
+        cascade='all, delete-orphan',
+        lazy='selectin',
     )
 
     __table_args__ = (
-        Index("ix_job_descriptions_user_created", "user_id", "created_at"),
+        Index('ix_job_descriptions_user_created', 'user_id', 'created_at'),
     )
 
     def __repr__(self) -> str:
-        return f"<JobDescription(id={self.id}, user_id={self.user_id}, title={self.title[:50]})>"
+        return f'<JobDescription(id={self.id}, user_id={self.user_id}, title={self.title[:50]})>'

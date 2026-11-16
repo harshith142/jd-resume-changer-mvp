@@ -25,9 +25,12 @@ import { toast } from 'sonner';
 
 const PROVIDERS = [
   { id: 'gemini', name: 'Google Gemini', icon: Brain, color: 'text-blue-600', bgColor: 'bg-blue-100 dark:bg-blue-900/30', description: 'Google\'s multimodal AI models' },
-  { id: 'openrouter', name: 'OpenRouter', icon: Zap, color: 'text-purple-600', bgColor: 'bg-purple-100 dark:bg-purple-900/30', description: 'Access 100+ models via single API' },
-  { id: 'nvidia', name: 'NVIDIA NIM', icon: Server, color: 'text-green-600', bgColor: 'bg-green-100 dark:bg-green-900/30', description: 'NVIDIA\'s optimized inference microservices' },
-  { id: 'ollama', name: 'Ollama (Local)', icon: Terminal, color: 'text-orange-600', bgColor: 'bg-orange-100 dark:bg-orange-900/30', description: 'Run models locally on your machine' },
+  { id: 'openai', name: 'OpenAI', icon: Zap, color: 'text-green-600', bgColor: 'bg-green-100 dark:bg-green-900/30', description: 'GPT-4o, GPT-4, and more' },
+  { id: 'anthropic', name: 'Anthropic Claude', icon: Shield, color: 'text-purple-600', bgColor: 'bg-purple-100 dark:bg-purple-900/30', description: 'Claude 3.5 Sonnet, Haiku, Opus' },
+  { id: 'grok', name: 'Grok (xAI)', icon: Server, color: 'text-orange-600', bgColor: 'bg-orange-100 dark:bg-orange-900/30', description: 'xAI\'s Grok models' },
+  { id: 'openrouter', name: 'OpenRouter', icon: Zap, color: 'text-pink-600', bgColor: 'bg-pink-100 dark:bg-pink-900/30', description: 'Access 100+ models via single API' },
+  { id: 'nvidia', name: 'NVIDIA NIM', icon: Server, color: 'text-emerald-600', bgColor: 'bg-emerald-100 dark:bg-emerald-900/30', description: 'NVIDIA\'s optimized inference microservices' },
+  { id: 'ollama', name: 'Ollama (Local)', icon: Terminal, color: 'text-amber-600', bgColor: 'bg-amber-100 dark:bg-amber-900/30', description: 'Run models locally on your machine' },
 ] as const;
 
 type ProviderId = typeof PROVIDERS[number]['id'];
@@ -126,7 +129,7 @@ export default function SettingsPage() {
     return PROVIDERS.find(p => p.id === provider) || PROVIDERS[0];
   };
 
-  const getKeyPreview = (key?: string) => {
+  const getKeyPreview = (key?: string | null) => {
     if (!key || key.length <= 8) return '••••••••';
     return key.slice(0, 4) + '••••' + key.slice(-4);
   };
@@ -328,8 +331,11 @@ export default function SettingsPage() {
 
               <p className="text-xs text-gray-500 dark:text-gray-400">
                 {showCreateModal === 'gemini' && 'Get your key from <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener" className="text-primary-600 hover:underline">Google AI Studio</a>'}
+                {showCreateModal === 'openai' && 'Get your key from <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener" className="text-primary-600 hover:underline">OpenAI Platform</a>'}
+                {showCreateModal === 'anthropic' && 'Get your key from <a href="https://console.anthropic.com/" target="_blank" rel="noopener" className="text-primary-600 hover:underline">Anthropic Console</a>'}
+                {showCreateModal === 'grok' && 'Get your key from <a href="https://console.x.ai/" target="_blank" rel="noopener" className="text-primary-600 hover:underline">xAI Console</a>'}
                 {showCreateModal === 'openrouter' && 'Get your key from <a href="https://openrouter.ai/keys" target="_blank" rel="noopener" className="text-primary-600 hover:underline">OpenRouter</a>'}
-                {showCreateModal === 'nvidia' && 'Get your key from <a href="https://build.nvidia.com/explore/discover" target="_blank" rel="noopener" className="text-primary-600 hover:underline">NVIDIA NGC</a>'}
+                {showCreateModal === 'nvidia' && 'Get your key from <a href="https://build.nvidia.com/explore/discover" target="_blank" rel="noopener" className="text-primary-600 hover:underline">NVIDIA Build</a>'}
                 {showCreateModal === 'ollama' && 'Ensure Ollama is running locally at http://localhost:11434. <a href="https://ollama.com" target="_blank" rel="noopener" className="text-primary-600 hover:underline">Download Ollama</a>'}
               </p>
 

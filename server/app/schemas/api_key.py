@@ -6,14 +6,20 @@ import uuid
 
 class LLMProvider(str):
     GEMINI = "gemini"
+    OPENAI = "openai"
+    ANTHROPIC = "anthropic"
+    GROK = "grok"
     OPENROUTER = "openrouter"
     NVIDIA = "nvidia"
     OLLAMA = "ollama"
 
 
+PROVIDER_LITERAL = Literal["gemini", "openai", "anthropic", "grok", "openrouter", "nvidia", "ollama"]
+
+
 class APIKeyCreate(BaseModel):
-    provider: Literal["gemini", "openrouter", "nvidia", "ollama"]
-    api_key: str = Field(..., min_length=10, description="The API key (will be encrypted)")
+    provider: PROVIDER_LITERAL
+    api_key: Optional[str] = Field(None, min_length=10, description="The API key (will be encrypted). Not required for Ollama.")
     model: Optional[str] = Field(None, max_length=100)
     ollama_host: Optional[HttpUrl] = Field(None, description="Ollama host URL (for Ollama only)")
     is_session_only: bool = Field(False, description="If true, key not stored in DB, sent per-request")
@@ -44,7 +50,7 @@ class APIKeyResponse(BaseModel):
 
 
 class APIKeyTestRequest(BaseModel):
-    provider: Literal["gemini", "openrouter", "nvidia", "ollama"]
+    provider: PROVIDER_LITERAL
     api_key: str
     model: Optional[str] = None
     ollama_host: Optional[HttpUrl] = None

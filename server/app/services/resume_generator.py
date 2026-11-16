@@ -1,10 +1,7 @@
 import json
-import httpx
 from typing import Dict, Any, Optional
 
-from app.config import get_settings
-
-settings = get_settings()
+from app.services.llm_client import call_llm_structured
 
 GENERATE_RESUME_SCHEMA = {
     "type": "object",
@@ -187,7 +184,7 @@ async def generate_tailored_resume(
         "CORRECT:\n\n"
         "C++ \\& Java\n\n"
         "============================================================\n"
-        "7. PRESERVE EXISTING LATEX COMMANDS\n\n"
+        "7. PRESERVE EXISTING LATEX COMMANDs\n\n"
         "The MASTER RESUME is the source template.\n\n"
         "Preserve existing custom commands such as:\n\n"
         "\\resumesection\n\n"
@@ -492,7 +489,7 @@ async def generate_tailored_resume(
         "Contains no ** Markdown bold markers.\n"
         "Contains no Markdown links.\n"
         "Contains no [text](URL) syntax.\n"
-        "Contains no unnecessary Markdown headings.\n"
+        "Contains no unnecessary MarkDown headings.\n"
         "Every \\href uses:\n\n"
         "\\href{URL}{display text}\n\n"
         "Percentage signs are escaped:\n\n"
@@ -547,94 +544,3 @@ async def generate_tailored_resume(
     )
 
     return await call_llm_structured(prompt, GENERATE_RESUME_SCHEMA, provider, api_key, model, ollama_host)
-
-
-async def call_llm_structured(
-    prompt: str,
-    schema: Dict[str, Any],
-    provider: str,
-    api_key: Optional[str],
-    model: Optional[str],
-    ollama_host: Optional[str] = None,
-) -> Dict[str, Any]:
-    if provider == "gemini":
-        return await _call_gemini(prompt, schema, api_key, model)
-    elif provider == "openrouter":
-        return await _call_openrouter(prompt, schema, api_key, model)
-    elif provider == "nvidia":
-        return await _call_nvidia(prompt, schema, api_key, model)
-    elif provider == "ollama":
-        return await _call_ollama(prompt, schema, ollama_host, model)
-    else:
-        raise ValueError(f"Unknown provider: {provider}")
-
-
-async def _call_gemini(prompt: str, schema: Dict, api_key: str, model: Optional[str]) -> Dict:
-    model = model or settings.gemini_model
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
-    payload = {
-        "contents": [{"parts": [{"text": prompt}]}],
-        "generationConfig": {
-            "responseMimeType": "application/json",
-            "responseSchema": schema,
-            "temperature": 0.1,
-        },
-    }
-    async with httpx.AsyncClient(timeout=180) as client:
-        resp = await client.post(url, params={"key": api_key}, json=payload)
-        resp.raise_for_status()
-        data = resp.json()
-        text = data["candidates"][0]["content"]["parts"][0]["text"]
-        return json.loads(text)
-
-
-async def _call_openrouter(prompt: str, schema: Dict, api_key: str, model: Optional[str]) -> Dict:
-    model = model or "meta-llama/llama-3.3-70b-instruct"
-    async with httpx.AsyncClient(timeout=120) as client:
-        resp = await client.post(
-            "https://openrouter.ai/api/v1/chat/completions",
-            headers={"Authorization": f"Bearer {api_key}"},
-            json={
-                "model": model,
-                "response_format": {"type": "json_object"},
-                "messages": [{"role": "user", "content": prompt + "\nRespond strictly in valid JSON matching the schema."}],
-            },
-        )
-        resp.raise_for_status()
-        content = resp.json()["choices"][0]["message"]["content"]
-        return json.loads(content)
-
-
-async def _call_nvidia(prompt: str, schema: Dict, api_key: str, model: Optional[str]) -> Dict:
-    model = model or "nvidia/nemotron-3-ultra-550b-a55b"
-    async with httpx.AsyncClient(timeout=120) as client:
-        resp = await client.post(
-            "https://integrate.api.nvidia.com/v1/chat/completions",
-            headers={"Authorization": f"Bearer {api_key}"},
-            json={
-                "model": model,
-                "response_format": {"type": "json_object"},
-                "messages": [{"role": "user", "content": prompt + "\nRespond strictly in valid JSON."}],
-            },
-        )
-        resp.raise_for_status()
-        content = resp.json()["choices"][0]["message"]["content"]
-        return json.loads(content)
-
-
-async def _call_ollama(prompt: str, schema: Dict, host: Optional[str], model: Optional[str]) -> Dict:
-    host = (host or settings.ollama_host).rstrip("/")
-    model = model or settings.ollama_model
-    async with httpx.AsyncClient(timeout=180) as client:
-        resp = await client.post(
-            f"{host}/api/generate",
-            json={
-                "model": model,
-                "prompt": prompt + "\nOutput strictly valid JSON.",
-                "format": "json",
-                "stream": False,
-            },
-        )
-        resp.raise_for_status()
-        raw_json = resp.json().get("response", "{}")
-        return json.loads(raw_json)
